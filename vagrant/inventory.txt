@@ -1,0 +1,37 @@
+[all]
+broker1.myredhat.com ansible_host=192.168.33.11
+broker2.myredhat.com ansible_host=192.168.33.12
+broker3.myredhat.com ansible_host=192.168.33.13
+
+[kafka1]
+broker1.myredhat.com ansible_host=192.168.33.11
+
+[kafka2]
+broker2.myredhat.com ansible_host=192.168.33.12
+
+[kafka3]
+broker3.myredhat.com ansible_host=192.168.33.13
+
+[zookeeper]
+broker1.myredhat.com ansible_host=192.168.33.11
+
+[install_auto:children]
+kafka2
+kafka3
+
+[kafka1:vars]
+id=0
+listeners=PLAINTEXT://192.168.33.11:9092
+
+[kafka2:vars]
+id=1
+listeners=PLAINTEXT://192.168.33.12:9092
+
+[kafka3:vars]
+id=2
+listeners=PLAINTEXT://192.168.33.13:9092
+
+[all:vars]
+user=kkosugi
+password=""
+

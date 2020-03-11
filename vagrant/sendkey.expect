@@ -1,0 +1,12 @@
+#!/usr/bin/expect
+
+set timeout -1
+spawn ssh-copy-id [lindex $argv 0]
+expect "Are you sure you want to continue connecting (yes/no)?" {
+  send "yes\n"
+}
+
+expect -regexp "(.)*password:(.)*" {
+  send "vagrant\n"
+}
+expect -re "(.)*you wanted were added."

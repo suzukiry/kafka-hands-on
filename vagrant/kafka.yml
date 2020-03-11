@@ -1,0 +1,120 @@
+- hosts: all
+  become: yes
+  tasks:
+    - name: "subscription-manager register --user {{ user }} --password {{ password }}"
+      redhat_subscription:
+        state: present
+        username: "{{ user }}"
+        password: "{{ password }}"
+        auto_attach: true
+
+    - name: "Installing unzip and OpenJDK 8 command."
+      yum:
+        name: "{{ packages }}"
+        state: latest
+      vars:
+        packages:
+        - unzip
+        - java-11-openjdk-devel
+        - git
+
+    - name: "Creating kafka group for AMQ Streams."
+      group:
+        name: "kafka"
+      when: inventory_hostname in groups['install_auto']
+
+    - name: "Creating kafka user for AMQ Streams."
+      user:
+        name: kafka
+        shell: /bin/bash
+        group: kafka
+        password: $1$SALT$V7FG55VIf9kJNqSuBfKz30
+      when: inventory_hostname in groups['install_auto']
+
+    - name: "Copying amq-streams file to all nodes."
+      copy:
+        src: ./amq-streams-1.3.0-bin.zip
+        dest: /root/amq-streams-1.3.0-bin.zip
+        owner: root
+        group: root
+
+    - name: "Creating some directories for installing and setting up AMQ Streams."
+      file:
+        path: "{{ item }}"
+        state: directory
+        owner: root
+        group: root
+      with_items:
+      - /opt/kafka
+      - /var/lib/kafka
+      - /var/lib/zookeeper
+      - /tmp/kafka
+      when: inventory_hostname in groups['install_auto']
+
+    - name: "Extract amq-streams-1.3.0-bin.zip to /tmp/kafka directory."
+      unarchive:
+        src: /root/amq-streams-1.3.0-bin.zip
+        dest: /tmp/kafka
+        remote_src: yes
+      when: inventory_hostname in groups['install_auto']
+
+    - name: "Rename /opt/kafka/..."
+      shell: mv -n /tmp/kafka/kafka_2.12-2.3.0.redhat-00003/* /opt/kafka
+      when: inventory_hostname in groups['install_auto']
+
+    - name: "Delete /tmp/kafka directory."
+      file:
+        path: /tmp/kafka
+        state: absent
+      when: inventory_hostname in groups['install_auto']
+
+    - name: "Configuration for broker2 and broker3."
+      lineinfile:
+        dest: /opt/kafka/config/server.properties
+        state: present
+        regexp: "{{ item.regexp }}"
+        line: "{{ item.line }}"
+        insertbefore: true
+      with_items:
+        - regexp: "^broker.id=0"
+          line: "broker.id={{ id }}"
+        - regexp: "^zookeeper.connect=localhost:2181"
+          line: "zookeeper.connect=broker1.myredhat.com:2181"
+        - regexp: "^#listeners=PLAINTEXT://:9092"
+          line: "listeners={{ listeners }}"
+        - regexp: "^log.dirs=/tmp/kafka-logs"
+          line: "log.dirs=/var/lib/kafka"
+        - regexp: "delete.topic.enable=false"
+          line: "delete.topi.enable=true"
+      when: inventory_hostname in groups['install_auto']
+
+    - name: "Creating some directories for installing and setting up AMQ Streams."
+      file:
+        path: "{{ item }}"
+        state: directory
+        owner: kafka
+        group: kafka
+        recurse: yes
+      with_items:
+      - /opt/kafka
+      - /var/lib/kafka
+      - /var/lib/zookeeper
+      when: inventory_hostname in groups['install_auto']
+
+    - name: "Firewalld --add-port."
+      firewalld:
+        port: "{{ item }}"
+        permanent: yes
+        state: enabled
+        zone: public
+      with_items:
+        - "2181/tcp"
+        - "9092/tcp"
+        - "2888/tcp"
+        - "3888/tcp"
+      ignore_errors: yes
+
+    - name: "Reload firewalld process."
+      systemd:
+        state: restarted
+        name: firewalld

@@ -1,0 +1,22 @@
+{
+  "language": "ja",
+  "title": "AMQ Streams on RHEL Hands-On",
+  "description": "This is a AMQ Streams(Apache Kafka) Hands-On documents.",
+  "plugins": [
+    "flexible-alerts",
+    "expand-active-chapter",
+    "-highlight",
+    "sunlight-highlighter",
+    "chapter-numbering"
+  ],
+  "pluginsConfig": {
+    "flexible-alerts": {
+    },
+    "sunlight-highlighter": {
+      "theme": "dark",
+      "lineNumbers": true
+    }
+  },
+  "comment": [
+  ]
+}

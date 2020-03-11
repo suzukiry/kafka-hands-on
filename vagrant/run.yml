@@ -1,0 +1,12 @@
+- hosts: all
+
+  tasks:
+  - name: "Executing zookeeper..."
+    shell: /opt/kafka/bin/kafka-zookeeper-start.sh daemon /opt/kafka/config/zookeeper.properties
+    when: inventory_hostname in groups['zookeeper']
+
+  tasks:
+  - name: "Executing kafka broker..."
+    shell: /opt/kafka/bin/kafka-server-start.sh daemon /opt/kafka/config/server.properties
+    serial: 1
+    with_items:

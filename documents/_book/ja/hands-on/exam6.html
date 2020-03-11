@@ -1,0 +1,865 @@
+
+<!DOCTYPE HTML>
+<html lang="ja" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>演習6 · AMQ Streams on RHEL Hands-On</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-flexible-alerts/style.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-expand-active-chapter/expand-active-chapter.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-sunlight-highlighter/sunlight.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-chapter-numbering/numbered-headings-website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="infrastructure.html" />
+    
+    
+    <link rel="prev" href="exam5.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="検索すると入力" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    イントロダクション
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="exam1.html">
+            
+                <a href="exam1.html">
+            
+                    
+                    演習1. AMQ Streams のインストールと環境設定
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="exam1.html">
+            
+                <a href="exam1.html#login">
+            
+                    
+                    インストール先へのログイン
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="exam1.html">
+            
+                <a href="exam1.html#user">
+            
+                    
+                    ユーザー、グループ、パスワードの作成
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3" data-path="exam1.html">
+            
+                <a href="exam1.html#directory">
+            
+                    
+                    インストール用ディレクトリの作成
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4" data-path="exam1.html">
+            
+                <a href="exam1.html#unzip">
+            
+                    
+                    アーカイブの解凍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.5" data-path="exam1.html">
+            
+                <a href="exam1.html#install">
+            
+                    
+                    AMQ Streams のインストール
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.6" data-path="exam1.html">
+            
+                <a href="exam1.html#chown">
+            
+                    
+                    所有者の変更
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.7" data-path="exam1.html">
+            
+                <a href="exam1.html#zookeeper">
+            
+                    
+                    zookeeper 用ディレクトリの作成
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.8" data-path="exam1.html">
+            
+                <a href="exam1.html#broker">
+            
+                    
+                    Kafka Broker 用ディレクトリの作成
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="exam2.html">
+            
+                <a href="exam2.html">
+            
+                    
+                    演習2. Zookeeper の設定と起動
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="exam2.html">
+            
+                <a href="exam2.html#login">
+            
+                    
+                    broker1 へのログイン
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="exam2.html">
+            
+                <a href="exam2.html#switch">
+            
+                    
+                    kafka ユーザーへのスイッチ
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3" data-path="exam2.html">
+            
+                <a href="exam2.html#myid">
+            
+                    
+                    myid の設定
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4" data-path="exam2.html">
+            
+                <a href="exam2.html#zookeeper">
+            
+                    
+                    zookeeper.properties の設定
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.5" data-path="exam2.html">
+            
+                <a href="exam2.html#exec">
+            
+                    
+                    Zookeeper の起動
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="exam3.html">
+            
+                <a href="exam3.html">
+            
+                    
+                    演習3. Kafka Broker の設定と起動
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1" data-path="exam3.html">
+            
+                <a href="exam3.html#login">
+            
+                    
+                    broker1 へのログイン
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2" data-path="exam3.html">
+            
+                <a href="exam3.html#file">
+            
+                    
+                    ファイルシステムの確認
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.3" data-path="exam3.html">
+            
+                <a href="exam3.html#switch">
+            
+                    
+                    kafka ユーザーへのスイッチ
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.4" data-path="exam3.html">
+            
+                <a href="exam3.html#config">
+            
+                    
+                    Kafka Broker の設定
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.5" data-path="exam3.html">
+            
+                <a href="exam3.html#exec">
+            
+                    
+                    Kafka Broker の起動
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="exam4.html">
+            
+                <a href="exam4.html">
+            
+                    
+                    演習4. Topic の作成
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.5.1" data-path="exam4.html">
+            
+                <a href="exam4.html#login">
+            
+                    
+                    broker1 へのログイン
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.2" data-path="exam4.html">
+            
+                <a href="exam4.html#switch">
+            
+                    
+                    kafka ユーザーへのスイッチ
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.3" data-path="exam4.html">
+            
+                <a href="exam4.html#topic">
+            
+                    
+                    Topic の作成
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.4" data-path="exam4.html">
+            
+                <a href="exam4.html#listtopic">
+            
+                    
+                    Topic の表示
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.5" data-path="exam4.html">
+            
+                <a href="exam4.html#topicstatus">
+            
+                    
+                    Topic の状態を確認
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="exam5.html">
+            
+                <a href="exam5.html">
+            
+                    
+                    演習5. Producer と Consumer の起動
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.6.1" data-path="exam5.html">
+            
+                <a href="exam5.html#producer">
+            
+                    
+                    Producer の起動
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.2" data-path="exam5.html">
+            
+                <a href="exam5.html#consumer">
+            
+                    
+                    Consumer の起動
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.3" data-path="exam5.html">
+            
+                <a href="exam5.html#log">
+            
+                    
+                    Log の確認
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.4" data-path="exam5.html">
+            
+                <a href="exam5.html#topic">
+            
+                    
+                    Topic の再作成
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.5" data-path="exam5.html">
+            
+                <a href="exam5.html#order">
+            
+                    
+                    順序の確認
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.7" data-path="exam6.html">
+            
+                <a href="exam6.html">
+            
+                    
+                    演習6
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="infrastructure.html">
+            
+                <a href="infrastructure.html">
+            
+                    
+                    Hands-On 環境の構築
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            GitBookで公開 
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >演習6</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <p><style>
+body {
+  counter-reset:  h1 6 h2 0 h3 0;
+}
+</style></p>
+<h1 id="&#x6F14;&#x7FD2;6">&#x6F14;&#x7FD2;6</h1>
+<h2 id="login">Producer &#x306E;&#x958B;&#x767A; </h2>
+<p>&#x4EE5;&#x4E0B;&#x306E;&#x30B3;&#x30DE;&#x30F3;&#x30C9;&#x3092;&#x5B9F;&#x884C;&#x3057;&#x3066; Kafka Producer &#x306E;&#x30BD;&#x30FC;&#x30B9;&#x30B3;&#x30FC;&#x30C9;&#x3092; clone &#x3057;&#x307E;&#x3059;&#x3002;</p>
+<pre><code class="lang-bash"><div class="sunlight-container sunlight-theme-dark"><div class="sunlight-code-container" style="border-width: 1px; border-style: solid;"><div class="sunlight-line-number-margin"><a name="sunlight-66-line-1" href="#sunlight-66-line-1">1</a>
+<a name="sunlight-66-line-2" href="#sunlight-66-line-2">2</a>
+</div><pre class="sunlight-highlight-bash sunlight-highlighted"><span class="sunlight-bash"><span class="sunlight-ident">TODO</span>
+<span class="sunlight-variable">$</span>&#xA0;<span class="sunlight-ident">git</span>&#xA0;<span class="sunlight-ident">clone</span>&#xA0;<span class="sunlight-ident">https</span><span class="sunlight-operator">:</span><span class="sunlight-operator">/</span><span class="sunlight-operator">/</span><span class="sunlight-ident">aaaaa</span>
+</span></pre></div></div></code></pre>
+<h2 id="code">Producer &#x306E;&#x30B3;&#x30FC;&#x30C9;&#x78BA;&#x8A8D; </h2>
+<pre><code class="lang-java"><div class="sunlight-container sunlight-theme-dark"><div class="sunlight-code-container" style="border-width: 1px; border-style: solid;"><div class="sunlight-line-number-margin"><a name="sunlight-67-line-1" href="#sunlight-67-line-1">1</a>
+<a name="sunlight-67-line-2" href="#sunlight-67-line-2">2</a>
+<a name="sunlight-67-line-3" href="#sunlight-67-line-3">3</a>
+<a name="sunlight-67-line-4" href="#sunlight-67-line-4">4</a>
+<a name="sunlight-67-line-5" href="#sunlight-67-line-5">5</a>
+<a name="sunlight-67-line-6" href="#sunlight-67-line-6">6</a>
+<a name="sunlight-67-line-7" href="#sunlight-67-line-7">7</a>
+<a name="sunlight-67-line-8" href="#sunlight-67-line-8">8</a>
+<a name="sunlight-67-line-9" href="#sunlight-67-line-9">9</a>
+<a name="sunlight-67-line-10" href="#sunlight-67-line-10">10</a>
+<a name="sunlight-67-line-11" href="#sunlight-67-line-11">11</a>
+<a name="sunlight-67-line-12" href="#sunlight-67-line-12">12</a>
+<a name="sunlight-67-line-13" href="#sunlight-67-line-13">13</a>
+<a name="sunlight-67-line-14" href="#sunlight-67-line-14">14</a>
+<a name="sunlight-67-line-15" href="#sunlight-67-line-15">15</a>
+<a name="sunlight-67-line-16" href="#sunlight-67-line-16">16</a>
+<a name="sunlight-67-line-17" href="#sunlight-67-line-17">17</a>
+<a name="sunlight-67-line-18" href="#sunlight-67-line-18">18</a>
+<a name="sunlight-67-line-19" href="#sunlight-67-line-19">19</a>
+<a name="sunlight-67-line-20" href="#sunlight-67-line-20">20</a>
+<a name="sunlight-67-line-21" href="#sunlight-67-line-21">21</a>
+<a name="sunlight-67-line-22" href="#sunlight-67-line-22">22</a>
+<a name="sunlight-67-line-23" href="#sunlight-67-line-23">23</a>
+<a name="sunlight-67-line-24" href="#sunlight-67-line-24">24</a>
+<a name="sunlight-67-line-25" href="#sunlight-67-line-25">25</a>
+<a name="sunlight-67-line-26" href="#sunlight-67-line-26">26</a>
+<a name="sunlight-67-line-27" href="#sunlight-67-line-27">27</a>
+<a name="sunlight-67-line-28" href="#sunlight-67-line-28">28</a>
+<a name="sunlight-67-line-29" href="#sunlight-67-line-29">29</a>
+<a name="sunlight-67-line-30" href="#sunlight-67-line-30">30</a>
+<a name="sunlight-67-line-31" href="#sunlight-67-line-31">31</a>
+<a name="sunlight-67-line-32" href="#sunlight-67-line-32">32</a>
+<a name="sunlight-67-line-33" href="#sunlight-67-line-33">33</a>
+<a name="sunlight-67-line-34" href="#sunlight-67-line-34">34</a>
+<a name="sunlight-67-line-35" href="#sunlight-67-line-35">35</a>
+<a name="sunlight-67-line-36" href="#sunlight-67-line-36">36</a>
+<a name="sunlight-67-line-37" href="#sunlight-67-line-37">37</a>
+<a name="sunlight-67-line-38" href="#sunlight-67-line-38">38</a>
+<a name="sunlight-67-line-39" href="#sunlight-67-line-39">39</a>
+<a name="sunlight-67-line-40" href="#sunlight-67-line-40">40</a>
+<a name="sunlight-67-line-41" href="#sunlight-67-line-41">41</a>
+<a name="sunlight-67-line-42" href="#sunlight-67-line-42">42</a>
+<a name="sunlight-67-line-43" href="#sunlight-67-line-43">43</a>
+<a name="sunlight-67-line-44" href="#sunlight-67-line-44">44</a>
+<a name="sunlight-67-line-45" href="#sunlight-67-line-45">45</a>
+<a name="sunlight-67-line-46" href="#sunlight-67-line-46">46</a>
+<a name="sunlight-67-line-47" href="#sunlight-67-line-47">47</a>
+<a name="sunlight-67-line-48" href="#sunlight-67-line-48">48</a>
+<a name="sunlight-67-line-49" href="#sunlight-67-line-49">49</a>
+<a name="sunlight-67-line-50" href="#sunlight-67-line-50">50</a>
+<a name="sunlight-67-line-51" href="#sunlight-67-line-51">51</a>
+<a name="sunlight-67-line-52" href="#sunlight-67-line-52">52</a>
+<a name="sunlight-67-line-53" href="#sunlight-67-line-53">53</a>
+<a name="sunlight-67-line-54" href="#sunlight-67-line-54">54</a>
+<a name="sunlight-67-line-55" href="#sunlight-67-line-55">55</a>
+<a name="sunlight-67-line-56" href="#sunlight-67-line-56">56</a>
+<a name="sunlight-67-line-57" href="#sunlight-67-line-57">57</a>
+<a name="sunlight-67-line-58" href="#sunlight-67-line-58">58</a>
+</div><pre class="sunlight-highlight-java sunlight-highlighted"><span class="sunlight-java"><span class="sunlight-keyword">package</span>&#xA0;<span class="sunlight-ident">com</span><span class="sunlight-operator">.</span><span class="sunlight-ident">redhat</span><span class="sunlight-operator">.</span><span class="sunlight-ident">japan</span><span class="sunlight-operator">.</span><span class="sunlight-ident">kafka</span><span class="sunlight-operator">.</span><span class="sunlight-ident">client</span><span class="sunlight-punctuation">;</span>
+
+<span class="sunlight-keyword">import</span>&#xA0;<span class="sunlight-ident">java</span><span class="sunlight-operator">.</span><span class="sunlight-ident">time</span><span class="sunlight-operator">.</span><span class="sunlight-named-ident">LocalDateTime</span><span class="sunlight-punctuation">;</span>
+<span class="sunlight-keyword">import</span>&#xA0;<span class="sunlight-ident">java</span><span class="sunlight-operator">.</span><span class="sunlight-ident">util</span><span class="sunlight-operator">.</span><span class="sunlight-named-ident">Properties</span><span class="sunlight-punctuation">;</span>
+<span class="sunlight-keyword">import</span>&#xA0;<span class="sunlight-ident">java</span><span class="sunlight-operator">.</span><span class="sunlight-ident">util</span><span class="sunlight-operator">.</span><span class="sunlight-ident">concurrent</span><span class="sunlight-operator">.</span><span class="sunlight-named-ident">ExecutionException</span><span class="sunlight-punctuation">;</span>
+<span class="sunlight-keyword">import</span>&#xA0;<span class="sunlight-ident">java</span><span class="sunlight-operator">.</span><span class="sunlight-ident">util</span><span class="sunlight-operator">.</span><span class="sunlight-ident">concurrent</span><span class="sunlight-operator">.</span><span class="sunlight-named-ident">Future</span><span class="sunlight-punctuation">;</span>
+<span class="sunlight-keyword">import</span>&#xA0;<span class="sunlight-ident">java</span><span class="sunlight-operator">.</span><span class="sunlight-ident">util</span><span class="sunlight-operator">.</span><span class="sunlight-ident">stream</span><span class="sunlight-operator">.</span><span class="sunlight-named-ident">Stream</span><span class="sunlight-punctuation">;</span>
+
+<span class="sunlight-keyword">import</span>&#xA0;<span class="sunlight-ident">org</span><span class="sunlight-operator">.</span><span class="sunlight-ident">apache</span><span class="sunlight-operator">.</span><span class="sunlight-ident">kafka</span><span class="sunlight-operator">.</span><span class="sunlight-ident">clients</span><span class="sunlight-operator">.</span><span class="sunlight-ident">producer</span><span class="sunlight-operator">.</span><span class="sunlight-named-ident">ProducerConfig</span><span class="sunlight-punctuation">;</span>
+<span class="sunlight-keyword">import</span>&#xA0;<span class="sunlight-ident">org</span><span class="sunlight-operator">.</span><span class="sunlight-ident">apache</span><span class="sunlight-operator">.</span><span class="sunlight-ident">kafka</span><span class="sunlight-operator">.</span><span class="sunlight-ident">clients</span><span class="sunlight-operator">.</span><span class="sunlight-ident">producer</span><span class="sunlight-operator">.</span><span class="sunlight-named-ident">ProducerRecord</span><span class="sunlight-punctuation">;</span>
+<span class="sunlight-keyword">import</span>&#xA0;<span class="sunlight-ident">org</span><span class="sunlight-operator">.</span><span class="sunlight-ident">apache</span><span class="sunlight-operator">.</span><span class="sunlight-ident">kafka</span><span class="sunlight-operator">.</span><span class="sunlight-ident">clients</span><span class="sunlight-operator">.</span><span class="sunlight-ident">producer</span><span class="sunlight-operator">.</span><span class="sunlight-named-ident">KafkaProducer</span><span class="sunlight-punctuation">;</span>
+<span class="sunlight-keyword">import</span>&#xA0;<span class="sunlight-ident">org</span><span class="sunlight-operator">.</span><span class="sunlight-ident">apache</span><span class="sunlight-operator">.</span><span class="sunlight-ident">kafka</span><span class="sunlight-operator">.</span><span class="sunlight-ident">clients</span><span class="sunlight-operator">.</span><span class="sunlight-ident">producer</span><span class="sunlight-operator">.</span><span class="sunlight-named-ident">RecordMetadata</span><span class="sunlight-punctuation">;</span>
+
+<span class="sunlight-keyword">public</span>&#xA0;<span class="sunlight-keyword">class</span>&#xA0;<span class="sunlight-named-ident">Producer</span>&#xA0;<span class="sunlight-punctuation">{</span>
+
+&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-keyword">public</span>&#xA0;<span class="sunlight-keyword">static</span>&#xA0;<span class="sunlight-keyword">void</span>&#xA0;<span class="sunlight-ident">main</span><span class="sunlight-punctuation">(</span><span class="sunlight-named-ident">String</span><span class="sunlight-punctuation">[</span><span class="sunlight-punctuation">]</span>&#xA0;<span class="sunlight-ident">args</span><span class="sunlight-punctuation">)</span>&#xA0;<span class="sunlight-punctuation">{</span>
+
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-comment">//&#xA0;Properties&#xA0;&#x306E;&#x751F;&#x6210;</span>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-named-ident">Properties</span>&#xA0;<span class="sunlight-ident">properties</span>&#xA0;<span class="sunlight-operator">=</span>&#xA0;<span class="sunlight-keyword">new</span>&#xA0;<span class="sunlight-named-ident">Properties</span><span class="sunlight-punctuation">(</span><span class="sunlight-punctuation">)</span><span class="sunlight-punctuation">;</span>
+
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-comment">//&#xA0;Kafka&#xA0;Broker&#xA0;&#x306E;&#x8A2D;&#x5B9A;</span>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-ident">properties</span><span class="sunlight-operator">.</span><span class="sunlight-ident">setProperty</span><span class="sunlight-punctuation">(</span><span class="sunlight-ident">ProducerConfig</span><span class="sunlight-operator">.</span><span class="sunlight-ident">BOOTSTRAP_SERVERS_CONFIG</span><span class="sunlight-punctuation">,</span>&#xA0;<span class="sunlight-string">&quot;192.168.33.11:9092&quot;</span><span class="sunlight-punctuation">)</span><span class="sunlight-punctuation">;</span>
+
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-comment">//&#xA0;StringSerializer&#xA0;&#x306E;&#x8A2D;&#x5B9A;</span>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-ident">properties</span><span class="sunlight-operator">.</span><span class="sunlight-ident">setProperty</span><span class="sunlight-punctuation">(</span><span class="sunlight-ident">ProducerConfig</span><span class="sunlight-operator">.</span><span class="sunlight-ident">KEY_SERIALIZER_CLASS_CONFIG</span><span class="sunlight-punctuation">,</span>&#xA0;<span class="sunlight-string">&quot;org.apache.kafka.common.serialization.StringSerializer&quot;</span><span class="sunlight-punctuation">)</span><span class="sunlight-punctuation">;</span>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-ident">properties</span><span class="sunlight-operator">.</span><span class="sunlight-ident">setProperty</span><span class="sunlight-punctuation">(</span><span class="sunlight-ident">ProducerConfig</span><span class="sunlight-operator">.</span><span class="sunlight-ident">VALUE_SERIALIZER_CLASS_CONFIG</span><span class="sunlight-punctuation">,</span>&#xA0;<span class="sunlight-string">&quot;org.apache.kafka.common.serialization.StringSerializer&quot;</span><span class="sunlight-punctuation">)</span><span class="sunlight-punctuation">;</span>
+
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-comment">//&#xA0;KafkaProduder&#xA0;&#x306E;&#x751F;&#x6210;</span>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-named-ident">KafkaProducer</span><span class="sunlight-operator">&lt;</span><span class="sunlight-named-ident">String</span><span class="sunlight-punctuation">,</span>&#xA0;<span class="sunlight-named-ident">String</span><span class="sunlight-operator">&gt;</span>&#xA0;<span class="sunlight-ident">producer</span>&#xA0;<span class="sunlight-operator">=</span>&#xA0;<span class="sunlight-keyword">new</span>&#xA0;<span class="sunlight-named-ident">KafkaProducer</span><span class="sunlight-operator">&lt;</span><span class="sunlight-operator">&gt;</span><span class="sunlight-punctuation">(</span><span class="sunlight-ident">properties</span><span class="sunlight-punctuation">)</span><span class="sunlight-punctuation">;</span>
+
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-comment">//&#xA0;&#x540C;&#x671F;&#x9001;&#x4FE1;</span>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-ident">Stream</span><span class="sunlight-operator">.</span><span class="sunlight-ident">of</span><span class="sunlight-punctuation">(</span><span class="sunlight-string">&quot;message1&quot;</span><span class="sunlight-punctuation">,</span>&#xA0;<span class="sunlight-string">&quot;message2&quot;</span><span class="sunlight-punctuation">,</span>&#xA0;<span class="sunlight-string">&quot;message3&quot;</span><span class="sunlight-punctuation">,</span>&#xA0;<span class="sunlight-string">&quot;message4&quot;</span><span class="sunlight-punctuation">,</span>&#xA0;<span class="sunlight-string">&quot;mesasge5&quot;</span><span class="sunlight-punctuation">,</span>&#xA0;<span class="sunlight-string">&quot;message6&quot;</span><span class="sunlight-punctuation">,</span>&#xA0;<span class="sunlight-string">&quot;mesasge7&quot;</span><span class="sunlight-punctuation">,</span>&#xA0;<span class="sunlight-string">&quot;message8&quot;</span><span class="sunlight-punctuation">)</span>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-operator">.</span><span class="sunlight-ident">forEach</span><span class="sunlight-punctuation">(</span><span class="sunlight-ident">i</span>&#xA0;<span class="sunlight-operator">-</span><span class="sunlight-operator">&gt;</span>&#xA0;<span class="sunlight-punctuation">{</span>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-keyword">try</span>&#xA0;<span class="sunlight-punctuation">{</span>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-comment">//&#xA0;Record&#xA0;&#x306E;&#x751F;&#x6210;(&#x30AD;&#x30FC;&#x306A;&#x3057;&#x3067;&#x30EC;&#x30B3;&#x30FC;&#x30C9;&#x3092;&#x751F;&#x6210;)</span>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-comment">//&#xA0;&#x7B2C;&#x4E00;&#x5F15;&#x6570;&#x306F;&#xA0;topic&#xA0;&#x540D;</span>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-comment">//&#xA0;&#x7B2C;&#x4E8C;&#x5F15;&#x6570;&#x306F;&#xA0;&#x30E1;&#x30C3;&#x30BB;&#x30FC;&#x30B8;</span>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-named-ident">ProducerRecord</span><span class="sunlight-operator">&lt;</span><span class="sunlight-named-ident">String</span><span class="sunlight-punctuation">,</span>&#xA0;<span class="sunlight-named-ident">String</span><span class="sunlight-operator">&gt;</span>&#xA0;<span class="sunlight-ident">records</span>&#xA0;<span class="sunlight-operator">=</span>&#xA0;<span class="sunlight-keyword">new</span>&#xA0;<span class="sunlight-named-ident">ProducerRecord</span><span class="sunlight-operator">&lt;</span><span class="sunlight-operator">&gt;</span><span class="sunlight-punctuation">(</span><span class="sunlight-string">&quot;mytopic&quot;</span><span class="sunlight-punctuation">,</span>&#xA0;<span class="sunlight-ident">i</span><span class="sunlight-punctuation">)</span><span class="sunlight-punctuation">;</span>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-named-ident">Future</span><span class="sunlight-operator">&lt;</span><span class="sunlight-named-ident">RecordMetadata</span><span class="sunlight-operator">&gt;</span>&#xA0;<span class="sunlight-ident">future</span>&#xA0;<span class="sunlight-operator">=</span>&#xA0;<span class="sunlight-ident">producer</span><span class="sunlight-operator">.</span><span class="sunlight-ident">send</span><span class="sunlight-punctuation">(</span><span class="sunlight-ident">records</span><span class="sunlight-punctuation">)</span><span class="sunlight-punctuation">;</span>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-named-ident">RecordMetadata</span>&#xA0;<span class="sunlight-ident">recordMetadata</span>&#xA0;<span class="sunlight-operator">=</span>&#xA0;<span class="sunlight-ident">future</span><span class="sunlight-operator">.</span><span class="sunlight-ident">get</span><span class="sunlight-punctuation">(</span><span class="sunlight-punctuation">)</span><span class="sunlight-punctuation">;</span>
+
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-ident">System</span><span class="sunlight-operator">.</span><span class="sunlight-ident">out</span><span class="sunlight-operator">.</span><span class="sunlight-ident">println</span><span class="sunlight-punctuation">(</span><span class="sunlight-string">&quot;=====================================================&quot;</span><span class="sunlight-punctuation">)</span><span class="sunlight-punctuation">;</span>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-ident">System</span><span class="sunlight-operator">.</span><span class="sunlight-ident">out</span><span class="sunlight-operator">.</span><span class="sunlight-ident">println</span><span class="sunlight-punctuation">(</span><span class="sunlight-ident">LocalDateTime</span><span class="sunlight-operator">.</span><span class="sunlight-ident">now</span><span class="sunlight-punctuation">(</span><span class="sunlight-punctuation">)</span><span class="sunlight-punctuation">)</span><span class="sunlight-punctuation">;</span>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-ident">System</span><span class="sunlight-operator">.</span><span class="sunlight-ident">out</span><span class="sunlight-operator">.</span><span class="sunlight-ident">println</span><span class="sunlight-punctuation">(</span><span class="sunlight-string">&quot;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;value&#xA0;:&#xA0;&quot;</span>&#xA0;<span class="sunlight-operator">+</span>&#xA0;<span class="sunlight-ident">i</span><span class="sunlight-punctuation">)</span><span class="sunlight-punctuation">;</span>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-ident">System</span><span class="sunlight-operator">.</span><span class="sunlight-ident">out</span><span class="sunlight-operator">.</span><span class="sunlight-ident">println</span><span class="sunlight-punctuation">(</span><span class="sunlight-string">&quot;&#xA0;&#xA0;partition&#xA0;:&#xA0;&quot;</span>&#xA0;<span class="sunlight-operator">+</span>&#xA0;<span class="sunlight-ident">recordMetadata</span><span class="sunlight-operator">.</span><span class="sunlight-ident">partition</span><span class="sunlight-punctuation">(</span><span class="sunlight-punctuation">)</span><span class="sunlight-punctuation">)</span><span class="sunlight-punctuation">;</span>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-ident">System</span><span class="sunlight-operator">.</span><span class="sunlight-ident">out</span><span class="sunlight-operator">.</span><span class="sunlight-ident">println</span><span class="sunlight-punctuation">(</span><span class="sunlight-string">&quot;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;offset&#xA0;:&#xA0;&quot;</span>&#xA0;<span class="sunlight-operator">+</span>&#xA0;<span class="sunlight-ident">recordMetadata</span><span class="sunlight-operator">.</span><span class="sunlight-ident">offset</span><span class="sunlight-punctuation">(</span><span class="sunlight-punctuation">)</span><span class="sunlight-punctuation">)</span><span class="sunlight-punctuation">;</span>
+
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-ident">Thread</span><span class="sunlight-operator">.</span><span class="sunlight-ident">sleep</span><span class="sunlight-punctuation">(</span><span class="sunlight-number">2000</span><span class="sunlight-punctuation">)</span><span class="sunlight-punctuation">;</span>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-punctuation">}</span>&#xA0;<span class="sunlight-keyword">catch</span>&#xA0;<span class="sunlight-punctuation">(</span><span class="sunlight-named-ident">InterruptedException</span>&#xA0;<span class="sunlight-ident">e</span><span class="sunlight-punctuation">)</span>&#xA0;<span class="sunlight-punctuation">{</span>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-ident">e</span><span class="sunlight-operator">.</span><span class="sunlight-ident">printStackTrace</span><span class="sunlight-punctuation">(</span><span class="sunlight-punctuation">)</span><span class="sunlight-punctuation">;</span>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-punctuation">}</span>&#xA0;<span class="sunlight-keyword">catch</span>&#xA0;<span class="sunlight-punctuation">(</span><span class="sunlight-named-ident">ExecutionException</span>&#xA0;<span class="sunlight-ident">e</span><span class="sunlight-punctuation">)</span>&#xA0;<span class="sunlight-punctuation">{</span>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-ident">e</span><span class="sunlight-operator">.</span><span class="sunlight-ident">printStackTrace</span><span class="sunlight-punctuation">(</span><span class="sunlight-punctuation">)</span><span class="sunlight-punctuation">;</span>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-punctuation">}</span>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-punctuation">}</span><span class="sunlight-punctuation">)</span><span class="sunlight-punctuation">;</span>
+
+&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-punctuation">}</span>
+
+<span class="sunlight-punctuation">}</span>
+</span></pre></div></div></code></pre>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="exam5.html#order" class="navigation navigation-prev " aria-label="Previous page: 順序の確認">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="infrastructure.html" class="navigation navigation-next " aria-label="Next page: Hands-On 環境の構築">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"演習6","level":"1.7","depth":1,"next":{"title":"Hands-On 環境の構築","level":"1.8","depth":1,"path":"hands-on/infrastructure.md","ref":"hands-on/infrastructure.md","articles":[]},"previous":{"title":"順序の確認","level":"1.6.5","depth":2,"anchor":"#order","path":"hands-on/exam5.md","ref":"hands-on/exam5.md#order","articles":[]},"dir":"ltr"},"config":{"plugins":["flexible-alerts","expand-active-chapter","-highlight","sunlight-highlighter","chapter-numbering"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"expand-active-chapter":{},"chapter-numbering":{},"flexible-alerts":{"danger":{"className":"danger","icon":"fa fa-ban","label":"Attention"},"note":{"className":"info","icon":"fa fa-info-circle","label":"Note"},"style":"callout","tip":{"className":"tip","icon":"fa fa-lightbulb-o","label":"Tip"},"warning":{"className":"warning","icon":"fa fa-exclamation-triangle","label":"Warning"}},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"sunlight-highlighter":{"lineNumbers":true,"theme":"dark"}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"AMQ Streams on RHEL Hands-On","language":"ja","gitbook":"*","description":"This is a AMQ Streams(Apache Kafka) Hands-On documents.","comment":[]},"file":{"path":"hands-on/exam6.md","mtime":"2020-03-09T06:31:59.342Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-10-11T07:03:41.661Z"},"basePath":"..","book":{"language":"ja"}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../../gitbook/gitbook.js"></script>
+    <script src="../../gitbook/theme.js"></script>
+    
+        
+        <script src="../../gitbook/gitbook-plugin-flexible-alerts/plugin.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-expand-active-chapter/expand-active-chapter.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+
