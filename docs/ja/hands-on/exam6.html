@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>演習6 · AMQ Streams on RHEL Hands-On</title>
+        <title>演習6. Producer と Consumer の開発 · AMQ Streams on RHEL Hands-On</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
@@ -578,7 +578,7 @@
                 <a href="exam6.html">
             
                     
-                    演習6
+                    演習6. Producer と Consumer の開発
             
                 </a>
             
@@ -629,7 +629,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href=".." >演習6</a>
+        <a href=".." >演習6. Producer と Consumer の開発</a>
     </h1>
 </div>
 
@@ -644,78 +644,82 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <p><style>
+                                <html><head><style>
 body {
   counter-reset:  h1 6 h2 0 h3 0;
 }
-</style></p>
-<h1 id="&#x6F14;&#x7FD2;6">&#x6F14;&#x7FD2;6</h1>
-<h2 id="login">Producer &#x306E;&#x958B;&#x767A; </h2>
-<p>&#x4EE5;&#x4E0B;&#x306E;&#x30B3;&#x30DE;&#x30F3;&#x30C9;&#x3092;&#x5B9F;&#x884C;&#x3057;&#x3066; Kafka Producer &#x306E;&#x30BD;&#x30FC;&#x30B9;&#x30B3;&#x30FC;&#x30C9;&#x3092; clone &#x3057;&#x307E;&#x3059;&#x3002;</p>
+</style>
+</head><body><h1 id="8-&#x6F14;&#x7FD2;6-producer-&#x3068;-consumer-&#x306E;&#x958B;&#x767A;"><span class="number-for-pdf">8. </span>&#x6F14;&#x7FD2;6. Producer &#x3068; Consumer &#x306E;&#x958B;&#x767A;</h1>
+<p>Producer &#x3068; Consumer &#x306E;&#x30AF;&#x30E9;&#x30A4;&#x30A2;&#x30F3;&#x30C8;&#x3092;&#x958B;&#x767A;&#x3057;&#x3066;&#x3044;&#x304D;&#x307E;&#x3059;&#x3002;
+&#x4ECA;&#x56DE;&#x306E;&#x6F14;&#x7FD2;&#x3067;&#x4F7F;&#x3046;&#x305F;&#x3081;&#x306E;&#x65B0;&#x3057;&#x3044;&#x30C8;&#x30D4;&#x30C3;&#x30AF;&#x3092;&#x3001;&#x6700;&#x521D;&#x306B;&#x4F5C;&#x6210;&#x3057;&#x3066;&#x304A;&#x304D;&#x307E;&#x3059;&#x3002;Partition&#x3092;4&#x3064;&#x3068;&#x3057;&#x305F;&#x65B0;&#x3057;&#x3044;testtopic&#x3092;&#x4F5C;&#x6210;&#x3057;&#x3001;&#x3053;&#x306E;&#x30C8;&#x30D4;&#x30C3;&#x30AF;&#x306B;&#x5BFE;&#x3057;&#x3066;&#x958B;&#x767A;&#x3059;&#x308B; Producer &#x3068; Consumer &#x3092;&#x4F7F;&#x3063;&#x3066;&#x3001;&#x30E1;&#x30C3;&#x30BB;&#x30FC;&#x30B8;&#x306E;&#x9001;&#x53D7;&#x4FE1;&#x3092;&#x884C;&#x3044;&#x307E;&#x3059;&#x3002;</p>
 <pre><code class="lang-bash"><div class="sunlight-container sunlight-theme-dark"><div class="sunlight-code-container" style="border-width: 1px; border-style: solid;"><div class="sunlight-line-number-margin"><a name="sunlight-66-line-1" href="#sunlight-66-line-1">1</a>
-<a name="sunlight-66-line-2" href="#sunlight-66-line-2">2</a>
-</div><pre class="sunlight-highlight-bash sunlight-highlighted"><span class="sunlight-bash"><span class="sunlight-ident">TODO</span>
-<span class="sunlight-variable">$</span>&#xA0;<span class="sunlight-ident">git</span>&#xA0;<span class="sunlight-ident">clone</span>&#xA0;<span class="sunlight-ident">https</span><span class="sunlight-operator">:</span><span class="sunlight-operator">/</span><span class="sunlight-operator">/</span><span class="sunlight-ident">aaaaa</span>
+</div><pre class="sunlight-highlight-bash sunlight-highlighted"><span class="sunlight-bash"><span class="sunlight-variable">$</span>&#xA0;<span class="sunlight-operator">/</span><span class="sunlight-ident">opt</span><span class="sunlight-operator">/</span><span class="sunlight-ident">kafka</span><span class="sunlight-operator">/</span><span class="sunlight-ident">bin</span><span class="sunlight-operator">/</span><span class="sunlight-ident">kafka</span><span class="sunlight-operator">-</span><span class="sunlight-ident">topics</span><span class="sunlight-operator">.</span><span class="sunlight-ident">sh</span>&#xA0;<span class="sunlight-operator">--</span><span class="sunlight-ident">alter</span>&#xA0;<span class="sunlight-operator">--</span><span class="sunlight-ident">topic</span>&#xA0;<span class="sunlight-ident">mytopic</span>&#xA0;<span class="sunlight-operator">--</span><span class="sunlight-ident">partitions</span>&#xA0;<span class="sunlight-number">4</span>&#xA0;<span class="sunlight-operator">--</span><span class="sunlight-ident">bootstrap</span><span class="sunlight-operator">-</span><span class="sunlight-ident">server</span>&#xA0;<span class="sunlight-number">192.168</span><span class="sunlight-number">.33</span><span class="sunlight-number">.11</span><span class="sunlight-operator">:</span><span class="sunlight-number">2181</span>
 </span></pre></div></div></code></pre>
-<h2 id="code">Producer &#x306E;&#x30B3;&#x30FC;&#x30C9;&#x78BA;&#x8A8D; </h2>
-<pre><code class="lang-java"><div class="sunlight-container sunlight-theme-dark"><div class="sunlight-code-container" style="border-width: 1px; border-style: solid;"><div class="sunlight-line-number-margin"><a name="sunlight-67-line-1" href="#sunlight-67-line-1">1</a>
-<a name="sunlight-67-line-2" href="#sunlight-67-line-2">2</a>
-<a name="sunlight-67-line-3" href="#sunlight-67-line-3">3</a>
-<a name="sunlight-67-line-4" href="#sunlight-67-line-4">4</a>
-<a name="sunlight-67-line-5" href="#sunlight-67-line-5">5</a>
-<a name="sunlight-67-line-6" href="#sunlight-67-line-6">6</a>
-<a name="sunlight-67-line-7" href="#sunlight-67-line-7">7</a>
-<a name="sunlight-67-line-8" href="#sunlight-67-line-8">8</a>
-<a name="sunlight-67-line-9" href="#sunlight-67-line-9">9</a>
-<a name="sunlight-67-line-10" href="#sunlight-67-line-10">10</a>
-<a name="sunlight-67-line-11" href="#sunlight-67-line-11">11</a>
-<a name="sunlight-67-line-12" href="#sunlight-67-line-12">12</a>
-<a name="sunlight-67-line-13" href="#sunlight-67-line-13">13</a>
-<a name="sunlight-67-line-14" href="#sunlight-67-line-14">14</a>
-<a name="sunlight-67-line-15" href="#sunlight-67-line-15">15</a>
-<a name="sunlight-67-line-16" href="#sunlight-67-line-16">16</a>
-<a name="sunlight-67-line-17" href="#sunlight-67-line-17">17</a>
-<a name="sunlight-67-line-18" href="#sunlight-67-line-18">18</a>
-<a name="sunlight-67-line-19" href="#sunlight-67-line-19">19</a>
-<a name="sunlight-67-line-20" href="#sunlight-67-line-20">20</a>
-<a name="sunlight-67-line-21" href="#sunlight-67-line-21">21</a>
-<a name="sunlight-67-line-22" href="#sunlight-67-line-22">22</a>
-<a name="sunlight-67-line-23" href="#sunlight-67-line-23">23</a>
-<a name="sunlight-67-line-24" href="#sunlight-67-line-24">24</a>
-<a name="sunlight-67-line-25" href="#sunlight-67-line-25">25</a>
-<a name="sunlight-67-line-26" href="#sunlight-67-line-26">26</a>
-<a name="sunlight-67-line-27" href="#sunlight-67-line-27">27</a>
-<a name="sunlight-67-line-28" href="#sunlight-67-line-28">28</a>
-<a name="sunlight-67-line-29" href="#sunlight-67-line-29">29</a>
-<a name="sunlight-67-line-30" href="#sunlight-67-line-30">30</a>
-<a name="sunlight-67-line-31" href="#sunlight-67-line-31">31</a>
-<a name="sunlight-67-line-32" href="#sunlight-67-line-32">32</a>
-<a name="sunlight-67-line-33" href="#sunlight-67-line-33">33</a>
-<a name="sunlight-67-line-34" href="#sunlight-67-line-34">34</a>
-<a name="sunlight-67-line-35" href="#sunlight-67-line-35">35</a>
-<a name="sunlight-67-line-36" href="#sunlight-67-line-36">36</a>
-<a name="sunlight-67-line-37" href="#sunlight-67-line-37">37</a>
-<a name="sunlight-67-line-38" href="#sunlight-67-line-38">38</a>
-<a name="sunlight-67-line-39" href="#sunlight-67-line-39">39</a>
-<a name="sunlight-67-line-40" href="#sunlight-67-line-40">40</a>
-<a name="sunlight-67-line-41" href="#sunlight-67-line-41">41</a>
-<a name="sunlight-67-line-42" href="#sunlight-67-line-42">42</a>
-<a name="sunlight-67-line-43" href="#sunlight-67-line-43">43</a>
-<a name="sunlight-67-line-44" href="#sunlight-67-line-44">44</a>
-<a name="sunlight-67-line-45" href="#sunlight-67-line-45">45</a>
-<a name="sunlight-67-line-46" href="#sunlight-67-line-46">46</a>
-<a name="sunlight-67-line-47" href="#sunlight-67-line-47">47</a>
-<a name="sunlight-67-line-48" href="#sunlight-67-line-48">48</a>
-<a name="sunlight-67-line-49" href="#sunlight-67-line-49">49</a>
-<a name="sunlight-67-line-50" href="#sunlight-67-line-50">50</a>
-<a name="sunlight-67-line-51" href="#sunlight-67-line-51">51</a>
-<a name="sunlight-67-line-52" href="#sunlight-67-line-52">52</a>
-<a name="sunlight-67-line-53" href="#sunlight-67-line-53">53</a>
-<a name="sunlight-67-line-54" href="#sunlight-67-line-54">54</a>
-<a name="sunlight-67-line-55" href="#sunlight-67-line-55">55</a>
-<a name="sunlight-67-line-56" href="#sunlight-67-line-56">56</a>
-<a name="sunlight-67-line-57" href="#sunlight-67-line-57">57</a>
-<a name="sunlight-67-line-58" href="#sunlight-67-line-58">58</a>
+<h2 id="login"><span class="number-for-pdf">8.1. </span>Producer &#x306E;&#x958B;&#x767A; </h2>
+<p>&#x4EE5;&#x4E0B;&#x306E;&#x30B3;&#x30DE;&#x30F3;&#x30C9;&#x3092;&#x5B9F;&#x884C;&#x3057;&#x3066; Kafka Producer &#x306E;&#x30BD;&#x30FC;&#x30B9;&#x30B3;&#x30FC;&#x30C9;&#x3092; clone &#x3057;&#x307E;&#x3059;&#x3002;</p>
+<pre><code class="lang-bash"><div class="sunlight-container sunlight-theme-dark"><div class="sunlight-code-container" style="border-width: 1px; border-style: solid;"><div class="sunlight-line-number-margin"><a name="sunlight-67-line-1" href="#sunlight-67-line-1">1</a>
+</div><pre class="sunlight-highlight-bash sunlight-highlighted"><span class="sunlight-bash"><span class="sunlight-variable">$</span>&#xA0;<span class="sunlight-ident">git</span>&#xA0;<span class="sunlight-ident">clone</span>&#xA0;<span class="sunlight-ident">https</span><span class="sunlight-operator">:</span><span class="sunlight-operator">/</span><span class="sunlight-operator">/</span><span class="sunlight-ident">github</span><span class="sunlight-operator">.</span><span class="sunlight-ident">com</span><span class="sunlight-operator">/</span><span class="sunlight-ident">k</span><span class="sunlight-operator">-</span><span class="sunlight-ident">kosugi</span><span class="sunlight-operator">/</span><span class="sunlight-ident">kafka</span><span class="sunlight-operator">-</span><span class="sunlight-ident">hands</span><span class="sunlight-operator">-</span><span class="sunlight-ident">on</span>
+</span></pre></div></div></code></pre>
+<h3 id="code"><span class="number-for-pdf">8.1.1. </span>Producer &#x306E;&#x30B3;&#x30FC;&#x30C9;&#x78BA;&#x8A8D; </h3>
+<p>&#x30C0;&#x30A6;&#x30F3;&#x30ED;&#x30FC;&#x30C9;&#x3057;&#x305F;&#x30EC;&#x30DD;&#x30B8;&#x30C8;&#x30EA;&#x306E;&#x3001;/producer/src/main/java/com/redhat/japan/kafka/producer &#x30C7;&#x30A3;&#x30EC;&#x30AF;&#x30C8;&#x30EA;&#x306B;Producer&#x306E;&#x30B3;&#x30FC;&#x30C9;&#x304C;&#x4FDD;&#x5B58;&#x3055;&#x308C;&#x3066;&#x3044;&#x307E;&#x3059;&#x3002;&#x4ECA;&#x56DE;&#x306F;&#x3001;IDE&#x304B;&#x3089;&#x5B9F;&#x884C;&#x3057;&#x3066;&#x3044;&#x304D;&#x307E;&#x3059;&#x306E;&#x3067;&#x3001;&#x304A;&#x4F7F;&#x3044;&#x306E;IDE&#x304B;&#x3089;&#x30C0;&#x30A6;&#x30F3;&#x30ED;&#x30FC;&#x30C9;&#x3057;&#x305F;Producer&#x306E;&#x30D5;&#x30A1;&#x30A4;&#x30EB;&#x3092;&#x95B2;&#x89A7;&#x3057;&#x3066;&#x307F;&#x3066;&#x304F;&#x3060;&#x3055;&#x3044;&#x3002;</p>
+<pre><code class="lang-java"><div class="sunlight-container sunlight-theme-dark"><div class="sunlight-code-container" style="border-width: 1px; border-style: solid;"><div class="sunlight-line-number-margin"><a name="sunlight-68-line-1" href="#sunlight-68-line-1">1</a>
+<a name="sunlight-68-line-2" href="#sunlight-68-line-2">2</a>
+<a name="sunlight-68-line-3" href="#sunlight-68-line-3">3</a>
+<a name="sunlight-68-line-4" href="#sunlight-68-line-4">4</a>
+<a name="sunlight-68-line-5" href="#sunlight-68-line-5">5</a>
+<a name="sunlight-68-line-6" href="#sunlight-68-line-6">6</a>
+<a name="sunlight-68-line-7" href="#sunlight-68-line-7">7</a>
+<a name="sunlight-68-line-8" href="#sunlight-68-line-8">8</a>
+<a name="sunlight-68-line-9" href="#sunlight-68-line-9">9</a>
+<a name="sunlight-68-line-10" href="#sunlight-68-line-10">10</a>
+<a name="sunlight-68-line-11" href="#sunlight-68-line-11">11</a>
+<a name="sunlight-68-line-12" href="#sunlight-68-line-12">12</a>
+<a name="sunlight-68-line-13" href="#sunlight-68-line-13">13</a>
+<a name="sunlight-68-line-14" href="#sunlight-68-line-14">14</a>
+<a name="sunlight-68-line-15" href="#sunlight-68-line-15">15</a>
+<a name="sunlight-68-line-16" href="#sunlight-68-line-16">16</a>
+<a name="sunlight-68-line-17" href="#sunlight-68-line-17">17</a>
+<a name="sunlight-68-line-18" href="#sunlight-68-line-18">18</a>
+<a name="sunlight-68-line-19" href="#sunlight-68-line-19">19</a>
+<a name="sunlight-68-line-20" href="#sunlight-68-line-20">20</a>
+<a name="sunlight-68-line-21" href="#sunlight-68-line-21">21</a>
+<a name="sunlight-68-line-22" href="#sunlight-68-line-22">22</a>
+<a name="sunlight-68-line-23" href="#sunlight-68-line-23">23</a>
+<a name="sunlight-68-line-24" href="#sunlight-68-line-24">24</a>
+<a name="sunlight-68-line-25" href="#sunlight-68-line-25">25</a>
+<a name="sunlight-68-line-26" href="#sunlight-68-line-26">26</a>
+<a name="sunlight-68-line-27" href="#sunlight-68-line-27">27</a>
+<a name="sunlight-68-line-28" href="#sunlight-68-line-28">28</a>
+<a name="sunlight-68-line-29" href="#sunlight-68-line-29">29</a>
+<a name="sunlight-68-line-30" href="#sunlight-68-line-30">30</a>
+<a name="sunlight-68-line-31" href="#sunlight-68-line-31">31</a>
+<a name="sunlight-68-line-32" href="#sunlight-68-line-32">32</a>
+<a name="sunlight-68-line-33" href="#sunlight-68-line-33">33</a>
+<a name="sunlight-68-line-34" href="#sunlight-68-line-34">34</a>
+<a name="sunlight-68-line-35" href="#sunlight-68-line-35">35</a>
+<a name="sunlight-68-line-36" href="#sunlight-68-line-36">36</a>
+<a name="sunlight-68-line-37" href="#sunlight-68-line-37">37</a>
+<a name="sunlight-68-line-38" href="#sunlight-68-line-38">38</a>
+<a name="sunlight-68-line-39" href="#sunlight-68-line-39">39</a>
+<a name="sunlight-68-line-40" href="#sunlight-68-line-40">40</a>
+<a name="sunlight-68-line-41" href="#sunlight-68-line-41">41</a>
+<a name="sunlight-68-line-42" href="#sunlight-68-line-42">42</a>
+<a name="sunlight-68-line-43" href="#sunlight-68-line-43">43</a>
+<a name="sunlight-68-line-44" href="#sunlight-68-line-44">44</a>
+<a name="sunlight-68-line-45" href="#sunlight-68-line-45">45</a>
+<a name="sunlight-68-line-46" href="#sunlight-68-line-46">46</a>
+<a name="sunlight-68-line-47" href="#sunlight-68-line-47">47</a>
+<a name="sunlight-68-line-48" href="#sunlight-68-line-48">48</a>
+<a name="sunlight-68-line-49" href="#sunlight-68-line-49">49</a>
+<a name="sunlight-68-line-50" href="#sunlight-68-line-50">50</a>
+<a name="sunlight-68-line-51" href="#sunlight-68-line-51">51</a>
+<a name="sunlight-68-line-52" href="#sunlight-68-line-52">52</a>
+<a name="sunlight-68-line-53" href="#sunlight-68-line-53">53</a>
+<a name="sunlight-68-line-54" href="#sunlight-68-line-54">54</a>
+<a name="sunlight-68-line-55" href="#sunlight-68-line-55">55</a>
+<a name="sunlight-68-line-56" href="#sunlight-68-line-56">56</a>
+<a name="sunlight-68-line-57" href="#sunlight-68-line-57">57</a>
+<a name="sunlight-68-line-58" href="#sunlight-68-line-58">58</a>
 </div><pre class="sunlight-highlight-java sunlight-highlighted"><span class="sunlight-java"><span class="sunlight-keyword">package</span>&#xA0;<span class="sunlight-ident">com</span><span class="sunlight-operator">.</span><span class="sunlight-ident">redhat</span><span class="sunlight-operator">.</span><span class="sunlight-ident">japan</span><span class="sunlight-operator">.</span><span class="sunlight-ident">kafka</span><span class="sunlight-operator">.</span><span class="sunlight-ident">client</span><span class="sunlight-punctuation">;</span>
 
 <span class="sunlight-keyword">import</span>&#xA0;<span class="sunlight-ident">java</span><span class="sunlight-operator">.</span><span class="sunlight-ident">time</span><span class="sunlight-operator">.</span><span class="sunlight-named-ident">LocalDateTime</span><span class="sunlight-punctuation">;</span>
@@ -743,7 +747,7 @@ body {
 &#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-ident">properties</span><span class="sunlight-operator">.</span><span class="sunlight-ident">setProperty</span><span class="sunlight-punctuation">(</span><span class="sunlight-ident">ProducerConfig</span><span class="sunlight-operator">.</span><span class="sunlight-ident">KEY_SERIALIZER_CLASS_CONFIG</span><span class="sunlight-punctuation">,</span>&#xA0;<span class="sunlight-string">&quot;org.apache.kafka.common.serialization.StringSerializer&quot;</span><span class="sunlight-punctuation">)</span><span class="sunlight-punctuation">;</span>
 &#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-ident">properties</span><span class="sunlight-operator">.</span><span class="sunlight-ident">setProperty</span><span class="sunlight-punctuation">(</span><span class="sunlight-ident">ProducerConfig</span><span class="sunlight-operator">.</span><span class="sunlight-ident">VALUE_SERIALIZER_CLASS_CONFIG</span><span class="sunlight-punctuation">,</span>&#xA0;<span class="sunlight-string">&quot;org.apache.kafka.common.serialization.StringSerializer&quot;</span><span class="sunlight-punctuation">)</span><span class="sunlight-punctuation">;</span>
 
-&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-comment">//&#xA0;KafkaProduder&#xA0;&#x306E;&#x751F;&#x6210;</span>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-comment">//&#xA0;KafkaProducer&#xA0;&#x306E;&#x751F;&#x6210;</span>
 &#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-named-ident">KafkaProducer</span><span class="sunlight-operator">&lt;</span><span class="sunlight-named-ident">String</span><span class="sunlight-punctuation">,</span>&#xA0;<span class="sunlight-named-ident">String</span><span class="sunlight-operator">&gt;</span>&#xA0;<span class="sunlight-ident">producer</span>&#xA0;<span class="sunlight-operator">=</span>&#xA0;<span class="sunlight-keyword">new</span>&#xA0;<span class="sunlight-named-ident">KafkaProducer</span><span class="sunlight-operator">&lt;</span><span class="sunlight-operator">&gt;</span><span class="sunlight-punctuation">(</span><span class="sunlight-ident">properties</span><span class="sunlight-punctuation">)</span><span class="sunlight-punctuation">;</span>
 
 &#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-comment">//&#xA0;&#x540C;&#x671F;&#x9001;&#x4FE1;</span>
@@ -753,7 +757,7 @@ body {
 &#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-comment">//&#xA0;Record&#xA0;&#x306E;&#x751F;&#x6210;(&#x30AD;&#x30FC;&#x306A;&#x3057;&#x3067;&#x30EC;&#x30B3;&#x30FC;&#x30C9;&#x3092;&#x751F;&#x6210;)</span>
 &#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-comment">//&#xA0;&#x7B2C;&#x4E00;&#x5F15;&#x6570;&#x306F;&#xA0;topic&#xA0;&#x540D;</span>
 &#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-comment">//&#xA0;&#x7B2C;&#x4E8C;&#x5F15;&#x6570;&#x306F;&#xA0;&#x30E1;&#x30C3;&#x30BB;&#x30FC;&#x30B8;</span>
-&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-named-ident">ProducerRecord</span><span class="sunlight-operator">&lt;</span><span class="sunlight-named-ident">String</span><span class="sunlight-punctuation">,</span>&#xA0;<span class="sunlight-named-ident">String</span><span class="sunlight-operator">&gt;</span>&#xA0;<span class="sunlight-ident">records</span>&#xA0;<span class="sunlight-operator">=</span>&#xA0;<span class="sunlight-keyword">new</span>&#xA0;<span class="sunlight-named-ident">ProducerRecord</span><span class="sunlight-operator">&lt;</span><span class="sunlight-operator">&gt;</span><span class="sunlight-punctuation">(</span><span class="sunlight-string">&quot;mytopic&quot;</span><span class="sunlight-punctuation">,</span>&#xA0;<span class="sunlight-ident">i</span><span class="sunlight-punctuation">)</span><span class="sunlight-punctuation">;</span>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-named-ident">ProducerRecord</span><span class="sunlight-operator">&lt;</span><span class="sunlight-named-ident">String</span><span class="sunlight-punctuation">,</span>&#xA0;<span class="sunlight-named-ident">String</span><span class="sunlight-operator">&gt;</span>&#xA0;<span class="sunlight-ident">records</span>&#xA0;<span class="sunlight-operator">=</span>&#xA0;<span class="sunlight-keyword">new</span>&#xA0;<span class="sunlight-named-ident">ProducerRecord</span><span class="sunlight-operator">&lt;</span><span class="sunlight-operator">&gt;</span><span class="sunlight-punctuation">(</span><span class="sunlight-string">&quot;testtopic&quot;</span><span class="sunlight-punctuation">,</span>&#xA0;<span class="sunlight-ident">i</span><span class="sunlight-punctuation">)</span><span class="sunlight-punctuation">;</span>
 &#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-named-ident">Future</span><span class="sunlight-operator">&lt;</span><span class="sunlight-named-ident">RecordMetadata</span><span class="sunlight-operator">&gt;</span>&#xA0;<span class="sunlight-ident">future</span>&#xA0;<span class="sunlight-operator">=</span>&#xA0;<span class="sunlight-ident">producer</span><span class="sunlight-operator">.</span><span class="sunlight-ident">send</span><span class="sunlight-punctuation">(</span><span class="sunlight-ident">records</span><span class="sunlight-punctuation">)</span><span class="sunlight-punctuation">;</span>
 &#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-named-ident">RecordMetadata</span>&#xA0;<span class="sunlight-ident">recordMetadata</span>&#xA0;<span class="sunlight-operator">=</span>&#xA0;<span class="sunlight-ident">future</span><span class="sunlight-operator">.</span><span class="sunlight-ident">get</span><span class="sunlight-punctuation">(</span><span class="sunlight-punctuation">)</span><span class="sunlight-punctuation">;</span>
 
@@ -775,7 +779,398 @@ body {
 
 <span class="sunlight-punctuation">}</span>
 </span></pre></div></div></code></pre>
+<h3 id="812-producer-&#x306E;&#x30B3;&#x30FC;&#x30C9;&#x5B9F;&#x884C;"><span class="number-for-pdf">8.1.2. </span>Producer &#x306E;&#x30B3;&#x30FC;&#x30C9;&#x5B9F;&#x884C;</h3>
+<p>IDE&#x3001;&#x307E;&#x305F;&#x306F;.jar&#x30D5;&#x30A1;&#x30A4;&#x30EB;&#x3092;&#x4F5C;&#x6210;&#x3057;&#x3066;&#x30B3;&#x30DE;&#x30F3;&#x30C9;&#x30E9;&#x30A4;&#x30F3;&#x304B;&#x3089;&#x5B9F;&#x884C;&#x3057;&#x307E;&#x3059;&#x3002;&#x5B9F;&#x884C;&#x3059;&#x308B;&#x3068;&#x4EE5;&#x4E0B;&#x306E;&#x3088;&#x3046;&#x306A;&#x30ED;&#x30B0;&#x304C;&#x51FA;&#x529B;&#x3055;&#x308C;&#x307E;&#x3059;&#x3002;</p>
+<pre><code>=====================================================
+2021-08-13T15:23:55.370
+      value : message1
+  partition : 1
+     offset : 0
+=====================================================
+2021-08-13T15:23:57.396
+      value : message2
+  partition : 0
+     offset : 0
+=====================================================
+2021-08-13T15:23:59.423
+      value : message3
+  partition : 2
+     offset : 0
+=====================================================
+2021-08-13T15:24:01.433
+      value : message4
+  partition : 1
+     offset : 1
+=====================================================
+2021-08-13T15:24:03.445
+      value : messasge5
+  partition : 0
+     offset : 1
+=====================================================
+2021-08-13T15:24:05.459
+      value : message6
+  partition : 2
+     offset : 1
+=====================================================
+2021-08-13T15:24:07.472
+      value : messasge7
+  partition : 1
+     offset : 2
+=====================================================
+2021-08-13T15:24:09.485
+      value : message8
+  partition : 0
+     offset : 2
 
+Process finished with exit code 0
+</code></pre><p>&#x3053;&#x306E;&#x30ED;&#x30B0;&#x304B;&#x3089;partition &#x304C;&#x30ED;&#x30FC;&#x30C6;&#x30FC;&#x30B7;&#x30E7;&#x30F3;&#x3055;&#x308C;&#x3066;&#x3044;&#x308B;&#x3053;&#x3068;&#x304C;&#x308F;&#x304B;&#x308A;&#x307E;&#x3059;&#x3002;&#x3053;&#x308C;&#x306F;&#x30D1;&#x30FC;&#x30C6;&#x30A3;&#x30B7;&#x30E7;&#x30F3;&#x306E;&#x5272;&#x308A;&#x5F53;&#x3066;&#x3068;&#x547C;&#x3070;&#x308C;&#x3001;Kafka&#x3067;&#x306F;&#x307E;&#x305A;Producer&#x304C;Broker&#x306B;&#x3069;&#x306E;&#x3088;&#x3046;&#x306B;&#x30D1;&#x30FC;&#x30C6;&#x30A3;&#x30B7;&#x30E7;&#x30F3;&#x3092;&#x5272;&#x308A;&#x5F53;&#x3066;&#x308B;&#x304B;&#x3092;&#x6C7A;&#x5B9A;&#x3057;&#x307E;&#x3059;&#x3002; &#x5272;&#x308A;&#x5F53;&#x3066;&#x3089;&#x308C;&#x305F;&#x5F8C;&#x306F;&#x3001;offset&#x306E;&#x756A;&#x53F7;&#x306F;&#x901A;&#x5E38;&#x901A;&#x308A;&#x30A4;&#x30F3;&#x30AF;&#x30EA;&#x30E1;&#x30F3;&#x30C8;&#x3055;&#x308C;&#x3066;&#x3044;&#x304D;&#x307E;&#x3059;&#x3002;</p>
+<p>Producer&#x30AF;&#x30E9;&#x30A4;&#x30A2;&#x30F3;&#x30C8;&#x306B;&#x3088;&#x308B;&#x30D1;&#x30FC;&#x30C6;&#x30A3;&#x30B7;&#x30E7;&#x30F3;&#x306E;&#x5272;&#x308A;&#x5F53;&#x3066;&#x65B9;&#x6CD5;&#x306F;&#x3001;&#x30C7;&#x30D5;&#x30A9;&#x30EB;&#x30C8;&#x3067;&#x306F;&#x30E9;&#x30A6;&#x30F3;&#x30C9;&#x30ED;&#x30D3;&#x30F3;&#x3067;&#x306E;&#x30E1;&#x30C3;&#x30BB;&#x30FC;&#x30B8;&#x9001;&#x4FE1;&#x3068;&#x306A;&#x308A;&#x307E;&#x3059;&#x3002;&#x305D;&#x306E;&#x4ED6;&#x3001;Producer &#x30AF;&#x30E9;&#x30A4;&#x30A2;&#x30F3;&#x30C8;&#x304B;&#x3089;&#x3001;&#x4EE5;&#x4E0B;&#x306E;&#x3088;&#x3046;&#x306A;&#x65B9;&#x6CD5;&#x3067;&#x30E1;&#x30C3;&#x30BB;&#x30FC;&#x30B8;&#x3092;&#x9001;&#x4FE1;&#x3059;&#x308B;&#x3053;&#x3068;&#x304C;&#x3067;&#x304D;&#x307E;&#x3059;&#x3002;</p>
+<h2 id="82-consumer-&#x306E;&#x958B;&#x767A;"><span class="number-for-pdf">8.2. </span>Consumer &#x306E;&#x958B;&#x767A;</h2>
+<p>&#x305D;&#x308C;&#x3067;&#x306F;testtopic&#x3078;&#xFF18;&#x3064;&#x306E;message&#x3092;&#x9001;&#x4ED8;&#x3057;&#x307E;&#x3057;&#x305F;&#x306E;&#x3067;&#x3001;Consumer&#x30AF;&#x30E9;&#x30A4;&#x30A2;&#x30F3;&#x30C8;&#x3092;&#x4F7F;&#x3063;&#x3066;&#x30E1;&#x30C3;&#x30BB;&#x30FC;&#x30B8;&#x306E;&#x53D7;&#x4FE1;&#x3092;&#x3057;&#x3066;&#x3044;&#x304D;&#x307E;&#x3059;&#x3002;</p>
+<h3 id="821-consumer-&#x306E;&#x30B3;&#x30FC;&#x30C9;&#x78BA;&#x8A8D;"><span class="number-for-pdf">8.2.1. </span>Consumer &#x306E;&#x30B3;&#x30FC;&#x30C9;&#x78BA;&#x8A8D;</h3>
+<p>&#x672C;&#x6F14;&#x7FD2;&#x306E;&#x521D;&#x56DE;&#x3067;&#x30C0;&#x30A6;&#x30F3;&#x30ED;&#x30FC;&#x30C9;&#x3057;&#x305F;&#x30EC;&#x30DD;&#x30B8;&#x30C8;&#x30EA;&#x306E;&#x3001;/consumer/src/main/java/com/redhat/japan/kafka/consumer &#x30C7;&#x30A3;&#x30EC;&#x30AF;&#x30C8;&#x30EA;&#x306B;Consumer&#x306E;&#x30B3;&#x30FC;&#x30C9;&#x3092;&#x4FDD;&#x5B58;&#x3057;&#x3066;&#x3044;&#x307E;&#x3059;&#x3002;</p>
+<p>Kafka&#x3000;Consumer&#x306F;&#x3001;Consumer&#x3068;Consumer&#x30B0;&#x30EB;&#x30FC;&#x30D7;&#x3067;&#x69CB;&#x6210;&#x3055;&#x308C;&#x3066;&#x3044;&#x307E;&#x3059;&#x3002;Consumer&#x306F;Consumer&#x30B0;&#x30EB;&#x30FC;&#x30D7;&#x306B;&#x5C5E;&#x3057;&#x3066;&#x3044;&#x3066;&#x3001;&#x5404;Consumer&#x306F;&#x8CFC;&#x8AAD;&#x3059;&#x308B;&#x30C8;&#x30D4;&#x30C3;&#x30AF;&#x306E;&#x30D1;&#x30FC;&#x30C6;&#x30A3;&#x30B7;&#x30E7;&#x30F3;&#x3092;&#x62C5;&#x5F53;&#x3057;&#x3066;&#x3044;&#x307E;&#x3059;&#x3002;</p>
+<p>&#x307E;&#x305F;&#x4E07;&#x304C;&#x4E00;Consumer&#x304C;&#x969C;&#x5BB3;&#x3067;&#x30B7;&#x30E3;&#x30C3;&#x30C8;&#x30C0;&#x30A6;&#x30F3;&#x306A;&#x3069;&#x306B;&#x6B62;&#x307E;&#x3063;&#x305F;&#x5834;&#x5408;&#x306B;&#x3082;&#x3001;&#x30B0;&#x30EB;&#x30FC;&#x30D7;&#x5185;&#x306E;Consumer&#x540C;&#x58EB;&#x3067;&#x62C5;&#x5F53;&#x3059;&#x308B;&#x30D1;&#x30FC;&#x30C6;&#x30A3;&#x30B7;&#x30E7;&#x30F3;&#x306E;&#x30AA;&#x30FC;&#x30CA;&#x30FC;&#x30B7;&#x30C3;&#x30D7;&#x3092;&#x5F15;&#x304D;&#x7D99;&#x3050;&#x3053;&#x3068;&#x304C;&#x3067;&#x304D;&#x308B;&#x305F;&#x3081;&#x3001;&#x53EF;&#x7528;&#x6027;&#x3092;&#x6301;&#x3064;&#x3053;&#x3068;&#x304C;&#x3067;&#x304D;&#x307E;&#x3059;&#x3002;&#x3053;&#x306E;&#x4ED5;&#x7D44;&#x307F;&#x304C;&#x30EA;&#x30D0;&#x30E9;&#x30F3;&#x30B9;&#x3068;&#x8A00;&#x308F;&#x308C;&#x3066;&#x3044;&#x307E;&#x3059;&#x3002;</p>
+<p><img src="../../images/exercise-6-consumer1.png" alt=""></p>
+<p>&#x56F3;&#xFF11;&#x3084;&#x56F3;&#xFF12;&#x306E;&#x3088;&#x3046;&#x306B;Consumer&#x3092;&#x5897;&#x3084;&#x3059;&#x3053;&#x3068;&#x3067;&#x8CFC;&#x8AAD;&#x3059;&#x308B;&#x30C8;&#x30D4;&#x30C3;&#x30AF;&#x306E;&#x30D1;&#x30FC;&#x30C6;&#x30A3;&#x30B7;&#x30E7;&#x30F3;&#x3092;&#x5171;&#x6709;&#x3067;&#x304D;&#x307E;&#x3059;&#x3002;&#x30C8;&#x30D4;&#x30C3;&#x30AF;&#x306E;&#x30E1;&#x30C3;&#x30BB;&#x30FC;&#x30B8;&#x306E;&#x6D88;&#x8CBB;&#x3092;&#x30B9;&#x30B1;&#x30FC;&#x30EB;&#x3059;&#x308B;&#x306B;&#x306F;&#x3001;&#x30D1;&#x30FC;&#x30C6;&#x30A3;&#x30B7;&#x30E7;&#x30F3;&#x3068;&#x540C;&#x6570;&#x306E;Consumer&#x3092;&#x6301;&#x3064;&#x3053;&#x3068;&#x3067;&#x3059;&#x3002;&#x56F3;&#xFF13;&#x306F;&#xFF14;&#x3064;&#x306E;Consumer&#x306B;&#x305D;&#x308C;&#x305E;&#x308C;&#x4E00;&#x3064;&#x306E;&#x30D1;&#x30FC;&#x30C6;&#x30A3;&#x30B7;&#x30E7;&#x30F3;&#x304C;&#x5272;&#x308A;&#x5F53;&#x3066;&#x3089;&#x308C;&#x3066;&#x3044;&#x308B;&#x4F8B;&#x3067;&#x3059;&#x3002;
+&#x305D;&#x3053;&#x3067;&#x3001;&#x3053;&#x3053;&#x3067;&#x306F;&#x56F3;&#xFF13;&#x306E;&#x3088;&#x3046;&#x306A;Consumer&#x3001;Consumer&#x30B0;&#x30EB;&#x30FC;&#x30D7;&#x3092;&#x958B;&#x767A;&#x3057;&#x3066;&#x3044;&#x304D;&#x307E;&#x3059;&#x3002;Consumer&#x3092;&#x30DE;&#x30EB;&#x30C1;&#x30B9;&#x30EC;&#x30C3;&#x30C9;&#x3067;&#x4F5C;&#x308B;&#x305F;&#x3081;&#x3001;&#x8907;&#x6570;&#x30B9;&#x30EC;&#x30C3;&#x30C9;&#x3068;&#x3057;&#x3066;Kafka Consumer&#x3092;&#x547C;&#x3073;&#x51FA;&#x3059;ConsumerGroup.java&#x3068;&#x3001;&#x5B9F;&#x969B;&#x306B;Consumer&#x30BF;&#x30B9;&#x30AF;&#x3092;&#x751F;&#x6210;&#x3059;&#x308B;ConsumerThread.java&#x306E;&#x4E8C;&#x3064;&#x3092;&#x5229;&#x7528;&#x3057;&#x307E;&#x3059;&#x3002;</p>
+<p>ConsumerGroup.java</p>
+<pre><code class="lang-java"><div class="sunlight-container sunlight-theme-dark"><div class="sunlight-code-container" style="border-width: 1px; border-style: solid;"><div class="sunlight-line-number-margin"><a name="sunlight-69-line-1" href="#sunlight-69-line-1">1</a>
+<a name="sunlight-69-line-2" href="#sunlight-69-line-2">2</a>
+<a name="sunlight-69-line-3" href="#sunlight-69-line-3">3</a>
+<a name="sunlight-69-line-4" href="#sunlight-69-line-4">4</a>
+<a name="sunlight-69-line-5" href="#sunlight-69-line-5">5</a>
+<a name="sunlight-69-line-6" href="#sunlight-69-line-6">6</a>
+<a name="sunlight-69-line-7" href="#sunlight-69-line-7">7</a>
+<a name="sunlight-69-line-8" href="#sunlight-69-line-8">8</a>
+<a name="sunlight-69-line-9" href="#sunlight-69-line-9">9</a>
+<a name="sunlight-69-line-10" href="#sunlight-69-line-10">10</a>
+<a name="sunlight-69-line-11" href="#sunlight-69-line-11">11</a>
+<a name="sunlight-69-line-12" href="#sunlight-69-line-12">12</a>
+<a name="sunlight-69-line-13" href="#sunlight-69-line-13">13</a>
+<a name="sunlight-69-line-14" href="#sunlight-69-line-14">14</a>
+<a name="sunlight-69-line-15" href="#sunlight-69-line-15">15</a>
+<a name="sunlight-69-line-16" href="#sunlight-69-line-16">16</a>
+<a name="sunlight-69-line-17" href="#sunlight-69-line-17">17</a>
+<a name="sunlight-69-line-18" href="#sunlight-69-line-18">18</a>
+<a name="sunlight-69-line-19" href="#sunlight-69-line-19">19</a>
+<a name="sunlight-69-line-20" href="#sunlight-69-line-20">20</a>
+<a name="sunlight-69-line-21" href="#sunlight-69-line-21">21</a>
+<a name="sunlight-69-line-22" href="#sunlight-69-line-22">22</a>
+<a name="sunlight-69-line-23" href="#sunlight-69-line-23">23</a>
+</div><pre class="sunlight-highlight-java sunlight-highlighted"><span class="sunlight-java">
+<span class="sunlight-keyword">import</span>&#xA0;<span class="sunlight-ident">java</span><span class="sunlight-operator">.</span><span class="sunlight-ident">util</span><span class="sunlight-operator">.</span><span class="sunlight-ident">concurrent</span><span class="sunlight-operator">.</span><span class="sunlight-named-ident">ExecutorService</span><span class="sunlight-punctuation">;</span>
+<span class="sunlight-keyword">import</span>&#xA0;<span class="sunlight-ident">java</span><span class="sunlight-operator">.</span><span class="sunlight-ident">util</span><span class="sunlight-operator">.</span><span class="sunlight-ident">concurrent</span><span class="sunlight-operator">.</span><span class="sunlight-named-ident">Executors</span><span class="sunlight-punctuation">;</span>
+<span class="sunlight-keyword">import</span>&#xA0;<span class="sunlight-ident">java</span><span class="sunlight-operator">.</span><span class="sunlight-ident">util</span><span class="sunlight-operator">.</span><span class="sunlight-ident">stream</span><span class="sunlight-operator">.</span><span class="sunlight-named-ident">Stream</span><span class="sunlight-punctuation">;</span>
+
+<span class="sunlight-keyword">public</span>&#xA0;<span class="sunlight-keyword">class</span>&#xA0;<span class="sunlight-named-ident">ConsumerGroup</span>&#xA0;<span class="sunlight-punctuation">{</span>
+
+&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-keyword">public</span>&#xA0;<span class="sunlight-keyword">static</span>&#xA0;<span class="sunlight-keyword">void</span>&#xA0;<span class="sunlight-ident">main</span><span class="sunlight-punctuation">(</span><span class="sunlight-named-ident">String</span><span class="sunlight-punctuation">[</span><span class="sunlight-punctuation">]</span>&#xA0;<span class="sunlight-ident">args</span><span class="sunlight-punctuation">)</span>&#xA0;<span class="sunlight-punctuation">{</span>
+
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-named-ident">String</span>&#xA0;<span class="sunlight-ident">consumerGroupName</span>&#xA0;<span class="sunlight-operator">=</span>&#xA0;<span class="sunlight-string">&quot;groupid&quot;</span><span class="sunlight-punctuation">;</span>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-named-ident">String</span>&#xA0;<span class="sunlight-ident">topic</span>&#xA0;<span class="sunlight-operator">=</span>&#xA0;<span class="sunlight-string">&quot;mytopic&quot;</span><span class="sunlight-punctuation">;</span>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-named-ident">String</span><span class="sunlight-punctuation">[</span><span class="sunlight-punctuation">]</span>&#xA0;<span class="sunlight-ident">consumerList</span>&#xA0;<span class="sunlight-operator">=</span>&#xA0;<span class="sunlight-punctuation">{</span><span class="sunlight-string">&quot;Consumer1&quot;</span><span class="sunlight-punctuation">,</span>&#xA0;<span class="sunlight-string">&quot;Consumer2&quot;</span><span class="sunlight-punctuation">,</span>&#xA0;<span class="sunlight-string">&quot;Consumer3&quot;</span><span class="sunlight-punctuation">}</span><span class="sunlight-punctuation">;</span>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-keyword">int</span>&#xA0;<span class="sunlight-ident">numConsumers</span>&#xA0;<span class="sunlight-operator">=</span>&#xA0;<span class="sunlight-ident">consumerList</span><span class="sunlight-operator">.</span><span class="sunlight-ident">length</span><span class="sunlight-punctuation">;</span>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-named-ident">ExecutorService</span>&#xA0;<span class="sunlight-ident">executor</span>&#xA0;<span class="sunlight-operator">=</span>&#xA0;<span class="sunlight-ident">Executors</span><span class="sunlight-operator">.</span><span class="sunlight-ident">newFixedThreadPool</span><span class="sunlight-punctuation">(</span><span class="sunlight-ident">numConsumers</span><span class="sunlight-punctuation">)</span><span class="sunlight-punctuation">;</span>
+
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-comment">//&#xA0;&#x540C;&#x671F;&#x9001;&#x4FE1;</span>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-ident">Stream</span><span class="sunlight-operator">.</span><span class="sunlight-ident">of</span><span class="sunlight-punctuation">(</span><span class="sunlight-ident">consumerList</span><span class="sunlight-punctuation">)</span>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-operator">.</span><span class="sunlight-ident">forEach</span><span class="sunlight-punctuation">(</span><span class="sunlight-ident">consumer</span>&#xA0;<span class="sunlight-operator">-</span><span class="sunlight-operator">&gt;</span>&#xA0;<span class="sunlight-punctuation">{</span>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-named-ident">ConsumerThread</span>&#xA0;<span class="sunlight-ident">consumerThread</span>&#xA0;<span class="sunlight-operator">=</span>&#xA0;<span class="sunlight-keyword">new</span>&#xA0;<span class="sunlight-named-ident">ConsumerThread</span><span class="sunlight-punctuation">(</span><span class="sunlight-ident">consumer</span><span class="sunlight-punctuation">,</span><span class="sunlight-ident">consumerGroupName</span><span class="sunlight-punctuation">,</span><span class="sunlight-ident">topic</span><span class="sunlight-punctuation">)</span><span class="sunlight-punctuation">;</span>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-ident">executor</span><span class="sunlight-operator">.</span><span class="sunlight-ident">submit</span><span class="sunlight-punctuation">(</span><span class="sunlight-ident">consumerThread</span><span class="sunlight-punctuation">)</span><span class="sunlight-punctuation">;</span>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-punctuation">}</span><span class="sunlight-punctuation">)</span><span class="sunlight-punctuation">;</span>
+&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-punctuation">}</span>
+<span class="sunlight-punctuation">}</span>
+</span></pre></div></div></code></pre>
+<p>ConsumerThread.java</p>
+<pre><code class="lang-java"><div class="sunlight-container sunlight-theme-dark"><div class="sunlight-code-container" style="border-width: 1px; border-style: solid;"><div class="sunlight-line-number-margin"><a name="sunlight-70-line-1" href="#sunlight-70-line-1">1</a>
+<a name="sunlight-70-line-2" href="#sunlight-70-line-2">2</a>
+<a name="sunlight-70-line-3" href="#sunlight-70-line-3">3</a>
+<a name="sunlight-70-line-4" href="#sunlight-70-line-4">4</a>
+<a name="sunlight-70-line-5" href="#sunlight-70-line-5">5</a>
+<a name="sunlight-70-line-6" href="#sunlight-70-line-6">6</a>
+<a name="sunlight-70-line-7" href="#sunlight-70-line-7">7</a>
+<a name="sunlight-70-line-8" href="#sunlight-70-line-8">8</a>
+<a name="sunlight-70-line-9" href="#sunlight-70-line-9">9</a>
+<a name="sunlight-70-line-10" href="#sunlight-70-line-10">10</a>
+<a name="sunlight-70-line-11" href="#sunlight-70-line-11">11</a>
+<a name="sunlight-70-line-12" href="#sunlight-70-line-12">12</a>
+<a name="sunlight-70-line-13" href="#sunlight-70-line-13">13</a>
+<a name="sunlight-70-line-14" href="#sunlight-70-line-14">14</a>
+<a name="sunlight-70-line-15" href="#sunlight-70-line-15">15</a>
+<a name="sunlight-70-line-16" href="#sunlight-70-line-16">16</a>
+<a name="sunlight-70-line-17" href="#sunlight-70-line-17">17</a>
+<a name="sunlight-70-line-18" href="#sunlight-70-line-18">18</a>
+<a name="sunlight-70-line-19" href="#sunlight-70-line-19">19</a>
+<a name="sunlight-70-line-20" href="#sunlight-70-line-20">20</a>
+<a name="sunlight-70-line-21" href="#sunlight-70-line-21">21</a>
+<a name="sunlight-70-line-22" href="#sunlight-70-line-22">22</a>
+<a name="sunlight-70-line-23" href="#sunlight-70-line-23">23</a>
+<a name="sunlight-70-line-24" href="#sunlight-70-line-24">24</a>
+<a name="sunlight-70-line-25" href="#sunlight-70-line-25">25</a>
+<a name="sunlight-70-line-26" href="#sunlight-70-line-26">26</a>
+<a name="sunlight-70-line-27" href="#sunlight-70-line-27">27</a>
+<a name="sunlight-70-line-28" href="#sunlight-70-line-28">28</a>
+<a name="sunlight-70-line-29" href="#sunlight-70-line-29">29</a>
+<a name="sunlight-70-line-30" href="#sunlight-70-line-30">30</a>
+<a name="sunlight-70-line-31" href="#sunlight-70-line-31">31</a>
+<a name="sunlight-70-line-32" href="#sunlight-70-line-32">32</a>
+<a name="sunlight-70-line-33" href="#sunlight-70-line-33">33</a>
+<a name="sunlight-70-line-34" href="#sunlight-70-line-34">34</a>
+<a name="sunlight-70-line-35" href="#sunlight-70-line-35">35</a>
+<a name="sunlight-70-line-36" href="#sunlight-70-line-36">36</a>
+<a name="sunlight-70-line-37" href="#sunlight-70-line-37">37</a>
+<a name="sunlight-70-line-38" href="#sunlight-70-line-38">38</a>
+<a name="sunlight-70-line-39" href="#sunlight-70-line-39">39</a>
+<a name="sunlight-70-line-40" href="#sunlight-70-line-40">40</a>
+<a name="sunlight-70-line-41" href="#sunlight-70-line-41">41</a>
+<a name="sunlight-70-line-42" href="#sunlight-70-line-42">42</a>
+<a name="sunlight-70-line-43" href="#sunlight-70-line-43">43</a>
+<a name="sunlight-70-line-44" href="#sunlight-70-line-44">44</a>
+<a name="sunlight-70-line-45" href="#sunlight-70-line-45">45</a>
+<a name="sunlight-70-line-46" href="#sunlight-70-line-46">46</a>
+<a name="sunlight-70-line-47" href="#sunlight-70-line-47">47</a>
+<a name="sunlight-70-line-48" href="#sunlight-70-line-48">48</a>
+<a name="sunlight-70-line-49" href="#sunlight-70-line-49">49</a>
+<a name="sunlight-70-line-50" href="#sunlight-70-line-50">50</a>
+<a name="sunlight-70-line-51" href="#sunlight-70-line-51">51</a>
+<a name="sunlight-70-line-52" href="#sunlight-70-line-52">52</a>
+<a name="sunlight-70-line-53" href="#sunlight-70-line-53">53</a>
+<a name="sunlight-70-line-54" href="#sunlight-70-line-54">54</a>
+<a name="sunlight-70-line-55" href="#sunlight-70-line-55">55</a>
+<a name="sunlight-70-line-56" href="#sunlight-70-line-56">56</a>
+<a name="sunlight-70-line-57" href="#sunlight-70-line-57">57</a>
+<a name="sunlight-70-line-58" href="#sunlight-70-line-58">58</a>
+<a name="sunlight-70-line-59" href="#sunlight-70-line-59">59</a>
+<a name="sunlight-70-line-60" href="#sunlight-70-line-60">60</a>
+<a name="sunlight-70-line-61" href="#sunlight-70-line-61">61</a>
+<a name="sunlight-70-line-62" href="#sunlight-70-line-62">62</a>
+<a name="sunlight-70-line-63" href="#sunlight-70-line-63">63</a>
+<a name="sunlight-70-line-64" href="#sunlight-70-line-64">64</a>
+<a name="sunlight-70-line-65" href="#sunlight-70-line-65">65</a>
+<a name="sunlight-70-line-66" href="#sunlight-70-line-66">66</a>
+</div><pre class="sunlight-highlight-java sunlight-highlighted"><span class="sunlight-java"><span class="sunlight-keyword">package</span>&#xA0;<span class="sunlight-ident">com</span><span class="sunlight-operator">.</span><span class="sunlight-ident">redhat</span><span class="sunlight-operator">.</span><span class="sunlight-ident">japan</span><span class="sunlight-operator">.</span><span class="sunlight-ident">kafka</span><span class="sunlight-operator">.</span><span class="sunlight-ident">consumer</span><span class="sunlight-punctuation">;</span>
+
+<span class="sunlight-keyword">import</span>&#xA0;<span class="sunlight-ident">org</span><span class="sunlight-operator">.</span><span class="sunlight-ident">apache</span><span class="sunlight-operator">.</span><span class="sunlight-ident">kafka</span><span class="sunlight-operator">.</span><span class="sunlight-ident">clients</span><span class="sunlight-operator">.</span><span class="sunlight-ident">consumer</span><span class="sunlight-operator">.</span><span class="sunlight-named-ident">ConsumerConfig</span><span class="sunlight-punctuation">;</span>
+<span class="sunlight-keyword">import</span>&#xA0;<span class="sunlight-ident">org</span><span class="sunlight-operator">.</span><span class="sunlight-ident">apache</span><span class="sunlight-operator">.</span><span class="sunlight-ident">kafka</span><span class="sunlight-operator">.</span><span class="sunlight-ident">clients</span><span class="sunlight-operator">.</span><span class="sunlight-ident">consumer</span><span class="sunlight-operator">.</span><span class="sunlight-named-ident">ConsumerRecords</span><span class="sunlight-punctuation">;</span>
+<span class="sunlight-keyword">import</span>&#xA0;<span class="sunlight-ident">org</span><span class="sunlight-operator">.</span><span class="sunlight-ident">apache</span><span class="sunlight-operator">.</span><span class="sunlight-ident">kafka</span><span class="sunlight-operator">.</span><span class="sunlight-ident">clients</span><span class="sunlight-operator">.</span><span class="sunlight-ident">consumer</span><span class="sunlight-operator">.</span><span class="sunlight-named-ident">KafkaConsumer</span><span class="sunlight-punctuation">;</span>
+
+<span class="sunlight-keyword">import</span>&#xA0;<span class="sunlight-ident">java</span><span class="sunlight-operator">.</span><span class="sunlight-ident">time</span><span class="sunlight-operator">.</span><span class="sunlight-named-ident">Duration</span><span class="sunlight-punctuation">;</span>
+<span class="sunlight-keyword">import</span>&#xA0;<span class="sunlight-ident">java</span><span class="sunlight-operator">.</span><span class="sunlight-ident">util</span><span class="sunlight-operator">.</span><span class="sunlight-named-ident">Collections</span><span class="sunlight-punctuation">;</span>
+<span class="sunlight-keyword">import</span>&#xA0;<span class="sunlight-ident">java</span><span class="sunlight-operator">.</span><span class="sunlight-ident">util</span><span class="sunlight-operator">.</span><span class="sunlight-named-ident">Properties</span><span class="sunlight-punctuation">;</span>
+<span class="sunlight-keyword">import</span>&#xA0;<span class="sunlight-ident">java</span><span class="sunlight-operator">.</span><span class="sunlight-ident">util</span><span class="sunlight-operator">.</span><span class="sunlight-ident">concurrent</span><span class="sunlight-operator">.</span><span class="sunlight-ident">atomic</span><span class="sunlight-operator">.</span><span class="sunlight-named-ident">AtomicBoolean</span><span class="sunlight-punctuation">;</span>
+
+<span class="sunlight-keyword">public</span>&#xA0;<span class="sunlight-keyword">class</span>&#xA0;<span class="sunlight-named-ident">ConsumerThread</span>&#xA0;<span class="sunlight-keyword">implements</span>&#xA0;<span class="sunlight-named-ident">Runnable</span>&#xA0;<span class="sunlight-punctuation">{</span>
+
+&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-keyword">private</span>&#xA0;<span class="sunlight-keyword">final</span>&#xA0;<span class="sunlight-named-ident">AtomicBoolean</span>&#xA0;<span class="sunlight-ident">closed</span>&#xA0;<span class="sunlight-operator">=</span>&#xA0;<span class="sunlight-keyword">new</span>&#xA0;<span class="sunlight-named-ident">AtomicBoolean</span><span class="sunlight-punctuation">(</span><span class="sunlight-keyword">false</span><span class="sunlight-punctuation">)</span><span class="sunlight-punctuation">;</span>
+
+&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-keyword">private</span>&#xA0;<span class="sunlight-named-ident">KafkaConsumer</span><span class="sunlight-operator">&lt;</span><span class="sunlight-named-ident">String</span><span class="sunlight-punctuation">,</span>&#xA0;<span class="sunlight-named-ident">String</span><span class="sunlight-operator">&gt;</span>&#xA0;<span class="sunlight-ident">kafkaConsumer</span><span class="sunlight-punctuation">;</span>
+&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-keyword">private</span>&#xA0;<span class="sunlight-named-ident">String</span>&#xA0;<span class="sunlight-ident">consumerGroupName</span><span class="sunlight-punctuation">;</span>
+&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-keyword">private</span>&#xA0;<span class="sunlight-named-ident">String</span>&#xA0;<span class="sunlight-ident">consumerName</span><span class="sunlight-punctuation">;</span>
+&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-keyword">private</span>&#xA0;<span class="sunlight-named-ident">String</span>&#xA0;<span class="sunlight-ident">topic</span><span class="sunlight-punctuation">;</span>
+
+&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-keyword">public</span>&#xA0;<span class="sunlight-named-ident">ConsumerThread</span><span class="sunlight-punctuation">(</span><span class="sunlight-named-ident">String</span>&#xA0;<span class="sunlight-ident">consumerName</span><span class="sunlight-punctuation">,</span>&#xA0;<span class="sunlight-named-ident">String</span>&#xA0;<span class="sunlight-ident">consumerGroupName</span><span class="sunlight-punctuation">,</span>&#xA0;<span class="sunlight-named-ident">String</span>&#xA0;<span class="sunlight-ident">topic</span><span class="sunlight-punctuation">)</span>&#xA0;<span class="sunlight-punctuation">{</span>
+
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-keyword">this</span><span class="sunlight-operator">.</span><span class="sunlight-ident">consumerName</span>&#xA0;<span class="sunlight-operator">=</span>&#xA0;<span class="sunlight-ident">consumerName</span><span class="sunlight-punctuation">;</span>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-keyword">this</span><span class="sunlight-operator">.</span><span class="sunlight-ident">consumerGroupName</span>&#xA0;<span class="sunlight-operator">=</span>&#xA0;<span class="sunlight-ident">consumerGroupName</span><span class="sunlight-punctuation">;</span>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-keyword">this</span><span class="sunlight-operator">.</span><span class="sunlight-ident">topic</span>&#xA0;<span class="sunlight-operator">=</span>&#xA0;<span class="sunlight-ident">topic</span><span class="sunlight-punctuation">;</span>
+
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-comment">//&#xA0;&#x30D7;&#x30ED;&#x30D1;&#x30C6;&#x30A3;&#x306E;&#x751F;&#x6210;&#x3068;&#x8A2D;&#x5B9A;</span>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-named-ident">Properties</span>&#xA0;<span class="sunlight-ident">properties</span>&#xA0;<span class="sunlight-operator">=</span>&#xA0;<span class="sunlight-keyword">new</span>&#xA0;<span class="sunlight-named-ident">Properties</span><span class="sunlight-punctuation">(</span><span class="sunlight-punctuation">)</span><span class="sunlight-punctuation">;</span>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-ident">properties</span><span class="sunlight-operator">.</span><span class="sunlight-ident">setProperty</span><span class="sunlight-punctuation">(</span><span class="sunlight-ident">ConsumerConfig</span><span class="sunlight-operator">.</span><span class="sunlight-ident">BOOTSTRAP_SERVERS_CONFIG</span><span class="sunlight-punctuation">,</span>&#xA0;<span class="sunlight-string">&quot;localhost:9092&quot;</span><span class="sunlight-punctuation">)</span><span class="sunlight-punctuation">;</span>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-ident">properties</span><span class="sunlight-operator">.</span><span class="sunlight-ident">setProperty</span><span class="sunlight-punctuation">(</span><span class="sunlight-ident">ConsumerConfig</span><span class="sunlight-operator">.</span><span class="sunlight-ident">GROUP_ID_CONFIG</span><span class="sunlight-punctuation">,</span>&#xA0;<span class="sunlight-ident">consumerGroupName</span><span class="sunlight-punctuation">)</span><span class="sunlight-punctuation">;</span>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-ident">properties</span><span class="sunlight-operator">.</span><span class="sunlight-ident">setProperty</span><span class="sunlight-punctuation">(</span><span class="sunlight-ident">ConsumerConfig</span><span class="sunlight-operator">.</span><span class="sunlight-ident">KEY_DESERIALIZER_CLASS_CONFIG</span><span class="sunlight-punctuation">,</span>&#xA0;<span class="sunlight-string">&quot;org.apache.kafka.common.serialization.StringDeserializer&quot;</span><span class="sunlight-punctuation">)</span><span class="sunlight-punctuation">;</span>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-ident">properties</span><span class="sunlight-operator">.</span><span class="sunlight-ident">setProperty</span><span class="sunlight-punctuation">(</span><span class="sunlight-ident">ConsumerConfig</span><span class="sunlight-operator">.</span><span class="sunlight-ident">VALUE_DESERIALIZER_CLASS_CONFIG</span><span class="sunlight-punctuation">,</span>&#xA0;<span class="sunlight-string">&quot;org.apache.kafka.common.serialization.StringDeserializer&quot;</span><span class="sunlight-punctuation">)</span><span class="sunlight-punctuation">;</span>
+
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-comment">//&#xA0;Consumer&#xA0;&#x306E;&#x751F;&#x6210;</span>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-keyword">this</span><span class="sunlight-operator">.</span><span class="sunlight-ident">kafkaConsumer</span>&#xA0;<span class="sunlight-operator">=</span>&#xA0;<span class="sunlight-keyword">new</span>&#xA0;<span class="sunlight-named-ident">KafkaConsumer</span><span class="sunlight-operator">&lt;</span><span class="sunlight-operator">&gt;</span><span class="sunlight-punctuation">(</span><span class="sunlight-ident">properties</span><span class="sunlight-punctuation">)</span><span class="sunlight-punctuation">;</span>
+&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-punctuation">}</span>
+
+&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-keyword">public</span>&#xA0;<span class="sunlight-keyword">void</span>&#xA0;<span class="sunlight-ident">run</span><span class="sunlight-punctuation">(</span><span class="sunlight-punctuation">)</span>&#xA0;<span class="sunlight-punctuation">{</span>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-comment">//&#xA0;&#x30B9;&#x30EC;&#x30C3;&#x30C9;&#x3092;&#xA0;&#x30C8;&#x30D4;&#x30C3;&#x30AF;&#xA0;&#x306B;&#x5272;&#x308A;&#x5F53;&#x3066;&#x308B;</span>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-ident">kafkaConsumer</span><span class="sunlight-operator">.</span><span class="sunlight-ident">subscribe</span><span class="sunlight-punctuation">(</span><span class="sunlight-ident">Collections</span><span class="sunlight-operator">.</span><span class="sunlight-ident">singletonList</span><span class="sunlight-punctuation">(</span><span class="sunlight-ident">topic</span><span class="sunlight-punctuation">)</span><span class="sunlight-punctuation">)</span><span class="sunlight-punctuation">;</span>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-keyword">try</span>&#xA0;<span class="sunlight-punctuation">{</span>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-keyword">while</span>&#xA0;<span class="sunlight-punctuation">(</span><span class="sunlight-operator">!</span><span class="sunlight-ident">closed</span><span class="sunlight-operator">.</span><span class="sunlight-ident">get</span><span class="sunlight-punctuation">(</span><span class="sunlight-punctuation">)</span><span class="sunlight-punctuation">)</span>&#xA0;<span class="sunlight-punctuation">{</span>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-comment">//&#xA0;polling</span>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-named-ident">ConsumerRecords</span><span class="sunlight-operator">&lt;</span><span class="sunlight-named-ident">String</span><span class="sunlight-punctuation">,</span>&#xA0;<span class="sunlight-named-ident">String</span><span class="sunlight-operator">&gt;</span>&#xA0;<span class="sunlight-ident">consumerRecord</span>&#xA0;<span class="sunlight-operator">=</span>&#xA0;<span class="sunlight-ident">kafkaConsumer</span><span class="sunlight-operator">.</span><span class="sunlight-ident">poll</span><span class="sunlight-punctuation">(</span><span class="sunlight-ident">Duration</span><span class="sunlight-operator">.</span><span class="sunlight-ident">ofMillis</span><span class="sunlight-punctuation">(</span><span class="sunlight-number">1</span><span class="sunlight-ident">_000</span><span class="sunlight-punctuation">)</span><span class="sunlight-punctuation">)</span><span class="sunlight-punctuation">;</span>
+
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-ident">consumerRecord</span><span class="sunlight-operator">.</span><span class="sunlight-ident">forEach</span><span class="sunlight-punctuation">(</span><span class="sunlight-ident">record</span>&#xA0;<span class="sunlight-operator">-</span><span class="sunlight-operator">&gt;</span>&#xA0;<span class="sunlight-punctuation">{</span>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-ident">System</span><span class="sunlight-operator">.</span><span class="sunlight-ident">out</span><span class="sunlight-operator">.</span><span class="sunlight-ident">println</span><span class="sunlight-punctuation">(</span><span class="sunlight-string">&quot;group:&#xA0;&quot;</span>&#xA0;<span class="sunlight-operator">+</span>&#xA0;<span class="sunlight-ident">consumerGroupName</span>&#xA0;<span class="sunlight-operator">+</span>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-string">&quot;,&#xA0;consumer:&#xA0;&quot;</span>&#xA0;<span class="sunlight-operator">+</span>&#xA0;<span class="sunlight-ident">consumerName</span>&#xA0;<span class="sunlight-operator">+</span>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-string">&quot;,&#xA0;partition:&#xA0;&quot;</span>&#xA0;<span class="sunlight-operator">+</span>&#xA0;<span class="sunlight-ident">record</span><span class="sunlight-operator">.</span><span class="sunlight-ident">partition</span><span class="sunlight-punctuation">(</span><span class="sunlight-punctuation">)</span>&#xA0;<span class="sunlight-operator">+</span>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-string">&quot;,&#xA0;topic:&#xA0;&quot;</span>&#xA0;<span class="sunlight-operator">+</span>&#xA0;<span class="sunlight-ident">record</span><span class="sunlight-operator">.</span><span class="sunlight-ident">topic</span><span class="sunlight-punctuation">(</span><span class="sunlight-punctuation">)</span>&#xA0;<span class="sunlight-operator">+</span>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-string">&quot;,&#xA0;offset:&#xA0;&quot;</span>&#xA0;<span class="sunlight-operator">+</span>&#xA0;<span class="sunlight-ident">record</span><span class="sunlight-operator">.</span><span class="sunlight-ident">offset</span><span class="sunlight-punctuation">(</span><span class="sunlight-punctuation">)</span>&#xA0;<span class="sunlight-operator">+</span>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-string">&quot;,&#xA0;key:&#xA0;&quot;</span>&#xA0;<span class="sunlight-operator">+</span>&#xA0;<span class="sunlight-ident">record</span><span class="sunlight-operator">.</span><span class="sunlight-ident">key</span><span class="sunlight-punctuation">(</span><span class="sunlight-punctuation">)</span>&#xA0;<span class="sunlight-operator">+</span>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-string">&quot;,&#xA0;value:&#xA0;&quot;</span>&#xA0;<span class="sunlight-operator">+</span>&#xA0;<span class="sunlight-ident">record</span><span class="sunlight-operator">.</span><span class="sunlight-ident">value</span><span class="sunlight-punctuation">(</span><span class="sunlight-punctuation">)</span>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-punctuation">)</span><span class="sunlight-punctuation">;</span>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-punctuation">}</span><span class="sunlight-punctuation">)</span><span class="sunlight-punctuation">;</span>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-punctuation">}</span>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-punctuation">}</span>&#xA0;<span class="sunlight-keyword">catch</span>&#xA0;<span class="sunlight-punctuation">(</span><span class="sunlight-named-ident">Exception</span>&#xA0;<span class="sunlight-ident">e</span><span class="sunlight-punctuation">)</span>&#xA0;<span class="sunlight-punctuation">{</span>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-keyword">if</span>&#xA0;<span class="sunlight-punctuation">(</span><span class="sunlight-operator">!</span><span class="sunlight-ident">closed</span><span class="sunlight-operator">.</span><span class="sunlight-ident">get</span><span class="sunlight-punctuation">(</span><span class="sunlight-punctuation">)</span><span class="sunlight-punctuation">)</span>&#xA0;<span class="sunlight-punctuation">{</span>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-keyword">throw</span>&#xA0;<span class="sunlight-ident">e</span><span class="sunlight-punctuation">;</span>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-punctuation">}</span>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-punctuation">}</span>&#xA0;<span class="sunlight-keyword">finally</span>&#xA0;<span class="sunlight-punctuation">{</span>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-ident">kafkaConsumer</span><span class="sunlight-operator">.</span><span class="sunlight-ident">close</span><span class="sunlight-punctuation">(</span><span class="sunlight-punctuation">)</span><span class="sunlight-punctuation">;</span>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-punctuation">}</span>
+
+&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-punctuation">}</span>
+<span class="sunlight-punctuation">}</span>
+</span></pre></div></div></code></pre>
+<h3 id="822-consumer-&#x306E;&#x30B3;&#x30FC;&#x30C9;&#x5B9F;&#x884C;"><span class="number-for-pdf">8.2.2. </span>Consumer &#x306E;&#x30B3;&#x30FC;&#x30C9;&#x5B9F;&#x884C;</h3>
+<p>IDE&#x307E;&#x305F;&#x306F;.jar&#x30D5;&#x30A1;&#x30A4;&#x30EB;&#x304B;&#x3089;&#x5B9F;&#x884C;&#x3057;&#x307E;&#x3059;&#x3002;</p>
+<pre><code>group: groupid, consumer: Consumer3, partition: 2, topic: mytopic, offset: 26, key: null, value: message1
+group: groupid, consumer: Consumer2, partition: 1, topic: mytopic, offset: 26, key: null, value: message2
+group: groupid, consumer: Consumer1, partition: 0, topic: mytopic, offset: 28, key: null, value: message3
+group: groupid, consumer: Consumer3, partition: 2, topic: mytopic, offset: 27, key: null, value: message4
+group: groupid, consumer: Consumer2, partition: 1, topic: mytopic, offset: 27, key: null, value: message5
+group: groupid, consumer: Consumer1, partition: 0, topic: mytopic, offset: 29, key: null, value: message6
+group: groupid, consumer: Consumer3, partition: 2, topic: mytopic, offset: 28, key: null, value: message7
+group: groupid, consumer: Consumer2, partition: 1, topic: mytopic, offset: 28, key: null, value: message8
+</code></pre><p>Consumer1&#x306B;&#x306F;partition: 0&#x3001;Consumer2&#x306B;&#x306F;partition: 1&#x3001;Consumer3&#x306B;&#x306F;partition: 2&#x304C;&#x5272;&#x308A;&#x5F53;&#x3066;&#x3089;&#x308C;&#x3066;&#x304A;&#x308A;&#x3001;&#x30C8;&#x30D4;&#x30C3;&#x30AF;&#x306E;&#xFF13;&#x3064;&#x306E;&#x30D1;&#x30FC;&#x30C6;&#x30A3;&#x30B7;&#x30E7;&#x30F3;&#x306B;&#x305D;&#x308C;&#x305E;&#x308C;Consumer&#x304C;&#x5272;&#x308A;&#x5F53;&#x3066;&#x3089;&#x308C;&#x3066;&#x3044;&#x308B;&#x306E;&#x304C;&#x308F;&#x304B;&#x308A;&#x307E;&#x3059;&#x3002;</p>
+<h3 id="823-&#x30D1;&#x30FC;&#x30C6;&#x30A3;&#x30B7;&#x30E7;&#x30F3;&#x4EE5;&#x4E0A;&#x306E;consumer-&#x306E;&#x30B1;&#x30FC;&#x30B9;"><span class="number-for-pdf">8.2.3. </span>&#x30D1;&#x30FC;&#x30C6;&#x30A3;&#x30B7;&#x30E7;&#x30F3;&#x4EE5;&#x4E0A;&#x306E;Consumer &#x306E;&#x30B1;&#x30FC;&#x30B9;</h3>
+<p>&#x305D;&#x308C;&#x3067;&#x306F;&#x3001;&#x30D1;&#x30FC;&#x30C6;&#x30A3;&#x30B7;&#x30E7;&#x30F3;&#x4EE5;&#x4E0A;&#x306E;Consumer&#x304C;&#x751F;&#x6210;&#x3055;&#x308C;&#x305F;&#x5834;&#x5408;&#x3082;&#x898B;&#x3066;&#x304A;&#x304D;&#x307E;&#x3057;&#x3087;&#x3046;&#x3002;</p>
+<p><img src="../../images/exercise-6-consumer2.png" alt=""></p>
+<p>Kafka Consumer&#x3067;&#x306F;&#x3001;&#x30C8;&#x30D4;&#x30C3;&#x30AF;&#x306E;&#x30D1;&#x30FC;&#x30C6;&#x30A3;&#x30B7;&#x30E7;&#x30F3;&#x6570;&#x4EE5;&#x4E0A;&#x306B;Consumer&#x3092;&#x8FFD;&#x52A0;&#x3057;&#x3066;&#x3082;&#x30D1;&#x30FC;&#x30C6;&#x30A3;&#x30B7;&#x30E7;&#x30F3;&#x306F;&#x30A2;&#x30B5;&#x30A4;&#x30F3;&#x3055;&#x308C;&#x307E;&#x305B;&#x3093;&#x3002;&#x4F59;&#x3063;&#x305F;Consumer&#x306F;&#x30A2;&#x30A4;&#x30C9;&#x30EB;&#x72B6;&#x614B;&#x306B;&#x306A;&#x308B;&#x305F;&#x3081;&#x3001;&#x3061;&#x3083;&#x3093;&#x3068;&#x30D1;&#x30FC;&#x30C6;&#x30A3;&#x30B7;&#x30E7;&#x30F3;&#x6570;&#x3092;&#x78BA;&#x8A8D;&#x306E;&#x4E0A;&#x3001;Consumer&#x6570;&#x306F;&#x8A2D;&#x8A08;&#x3059;&#x308B;&#x3053;&#x3068;&#x304C;&#x5FC5;&#x8981;&#x3067;&#x3059;&#x3002;</p>
+<p>ConsumerGroupWithFiveConsumers.java</p>
+<pre><code class="lang-java"><div class="sunlight-container sunlight-theme-dark"><div class="sunlight-code-container" style="border-width: 1px; border-style: solid;"><div class="sunlight-line-number-margin"><a name="sunlight-71-line-1" href="#sunlight-71-line-1">1</a>
+<a name="sunlight-71-line-2" href="#sunlight-71-line-2">2</a>
+<a name="sunlight-71-line-3" href="#sunlight-71-line-3">3</a>
+<a name="sunlight-71-line-4" href="#sunlight-71-line-4">4</a>
+<a name="sunlight-71-line-5" href="#sunlight-71-line-5">5</a>
+<a name="sunlight-71-line-6" href="#sunlight-71-line-6">6</a>
+<a name="sunlight-71-line-7" href="#sunlight-71-line-7">7</a>
+<a name="sunlight-71-line-8" href="#sunlight-71-line-8">8</a>
+<a name="sunlight-71-line-9" href="#sunlight-71-line-9">9</a>
+<a name="sunlight-71-line-10" href="#sunlight-71-line-10">10</a>
+<a name="sunlight-71-line-11" href="#sunlight-71-line-11">11</a>
+<a name="sunlight-71-line-12" href="#sunlight-71-line-12">12</a>
+<a name="sunlight-71-line-13" href="#sunlight-71-line-13">13</a>
+<a name="sunlight-71-line-14" href="#sunlight-71-line-14">14</a>
+<a name="sunlight-71-line-15" href="#sunlight-71-line-15">15</a>
+<a name="sunlight-71-line-16" href="#sunlight-71-line-16">16</a>
+<a name="sunlight-71-line-17" href="#sunlight-71-line-17">17</a>
+<a name="sunlight-71-line-18" href="#sunlight-71-line-18">18</a>
+<a name="sunlight-71-line-19" href="#sunlight-71-line-19">19</a>
+<a name="sunlight-71-line-20" href="#sunlight-71-line-20">20</a>
+<a name="sunlight-71-line-21" href="#sunlight-71-line-21">21</a>
+<a name="sunlight-71-line-22" href="#sunlight-71-line-22">22</a>
+<a name="sunlight-71-line-23" href="#sunlight-71-line-23">23</a>
+<a name="sunlight-71-line-24" href="#sunlight-71-line-24">24</a>
+<a name="sunlight-71-line-25" href="#sunlight-71-line-25">25</a>
+</div><pre class="sunlight-highlight-java sunlight-highlighted"><span class="sunlight-java">
+<span class="sunlight-keyword">import</span>&#xA0;<span class="sunlight-ident">java</span><span class="sunlight-operator">.</span><span class="sunlight-ident">util</span><span class="sunlight-operator">.</span><span class="sunlight-ident">concurrent</span><span class="sunlight-operator">.</span><span class="sunlight-named-ident">ExecutorService</span><span class="sunlight-punctuation">;</span>
+<span class="sunlight-keyword">import</span>&#xA0;<span class="sunlight-ident">java</span><span class="sunlight-operator">.</span><span class="sunlight-ident">util</span><span class="sunlight-operator">.</span><span class="sunlight-ident">concurrent</span><span class="sunlight-operator">.</span><span class="sunlight-named-ident">Executors</span><span class="sunlight-punctuation">;</span>
+<span class="sunlight-keyword">import</span>&#xA0;<span class="sunlight-ident">java</span><span class="sunlight-operator">.</span><span class="sunlight-ident">util</span><span class="sunlight-operator">.</span><span class="sunlight-ident">stream</span><span class="sunlight-operator">.</span><span class="sunlight-named-ident">Stream</span><span class="sunlight-punctuation">;</span>
+
+<span class="sunlight-keyword">public</span>&#xA0;<span class="sunlight-keyword">class</span>&#xA0;<span class="sunlight-named-ident">ConsumerGroupWithFiveConsumers</span>&#xA0;<span class="sunlight-punctuation">{</span>
+
+&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-keyword">public</span>&#xA0;<span class="sunlight-keyword">static</span>&#xA0;<span class="sunlight-keyword">void</span>&#xA0;<span class="sunlight-ident">main</span><span class="sunlight-punctuation">(</span><span class="sunlight-named-ident">String</span><span class="sunlight-punctuation">[</span><span class="sunlight-punctuation">]</span>&#xA0;<span class="sunlight-ident">args</span><span class="sunlight-punctuation">)</span>&#xA0;<span class="sunlight-punctuation">{</span>
+
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-named-ident">String</span>&#xA0;<span class="sunlight-ident">consumerGroupName</span>&#xA0;<span class="sunlight-operator">=</span>&#xA0;<span class="sunlight-string">&quot;groupid&quot;</span><span class="sunlight-punctuation">;</span>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-named-ident">String</span>&#xA0;<span class="sunlight-ident">topic</span>&#xA0;<span class="sunlight-operator">=</span>&#xA0;<span class="sunlight-string">&quot;mytopic&quot;</span><span class="sunlight-punctuation">;</span>
+
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-comment">//&#xA0;Consumer&#x306E;&#x6570;&#x3092;5&#x3064;&#x306B;&#x5897;&#x3084;&#x3057;&#x307E;&#x3057;&#x305F;</span>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-named-ident">String</span><span class="sunlight-punctuation">[</span><span class="sunlight-punctuation">]</span>&#xA0;<span class="sunlight-ident">consumerList</span>&#xA0;<span class="sunlight-operator">=</span>&#xA0;<span class="sunlight-punctuation">{</span><span class="sunlight-string">&quot;Consumer1&quot;</span><span class="sunlight-punctuation">,</span>&#xA0;<span class="sunlight-string">&quot;Consumer2&quot;</span><span class="sunlight-punctuation">,</span>&#xA0;<span class="sunlight-string">&quot;Consumer3&quot;</span><span class="sunlight-punctuation">,</span>&#xA0;<span class="sunlight-string">&quot;Consumer4&quot;</span><span class="sunlight-punctuation">,</span>&#xA0;<span class="sunlight-string">&quot;Consumer5&quot;</span><span class="sunlight-punctuation">}</span><span class="sunlight-punctuation">;</span>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-keyword">int</span>&#xA0;<span class="sunlight-ident">numConsumers</span>&#xA0;<span class="sunlight-operator">=</span>&#xA0;<span class="sunlight-ident">consumerList</span><span class="sunlight-operator">.</span><span class="sunlight-ident">length</span><span class="sunlight-punctuation">;</span>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-named-ident">ExecutorService</span>&#xA0;<span class="sunlight-ident">executor</span>&#xA0;<span class="sunlight-operator">=</span>&#xA0;<span class="sunlight-ident">Executors</span><span class="sunlight-operator">.</span><span class="sunlight-ident">newFixedThreadPool</span><span class="sunlight-punctuation">(</span><span class="sunlight-ident">numConsumers</span><span class="sunlight-punctuation">)</span><span class="sunlight-punctuation">;</span>
+
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-comment">//&#xA0;&#x540C;&#x671F;&#x9001;&#x4FE1;</span>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-ident">Stream</span><span class="sunlight-operator">.</span><span class="sunlight-ident">of</span><span class="sunlight-punctuation">(</span><span class="sunlight-ident">consumerList</span><span class="sunlight-punctuation">)</span>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-operator">.</span><span class="sunlight-ident">forEach</span><span class="sunlight-punctuation">(</span><span class="sunlight-ident">consumer</span>&#xA0;<span class="sunlight-operator">-</span><span class="sunlight-operator">&gt;</span>&#xA0;<span class="sunlight-punctuation">{</span>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-named-ident">ConsumerThread</span>&#xA0;<span class="sunlight-ident">consumerThread</span>&#xA0;<span class="sunlight-operator">=</span>&#xA0;<span class="sunlight-keyword">new</span>&#xA0;<span class="sunlight-named-ident">ConsumerThread</span><span class="sunlight-punctuation">(</span><span class="sunlight-ident">consumer</span><span class="sunlight-punctuation">,</span><span class="sunlight-ident">consumerGroupName</span><span class="sunlight-punctuation">,</span><span class="sunlight-ident">topic</span><span class="sunlight-punctuation">)</span><span class="sunlight-punctuation">;</span>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-ident">executor</span><span class="sunlight-operator">.</span><span class="sunlight-ident">submit</span><span class="sunlight-punctuation">(</span><span class="sunlight-ident">consumerThread</span><span class="sunlight-punctuation">)</span><span class="sunlight-punctuation">;</span>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-punctuation">}</span><span class="sunlight-punctuation">)</span><span class="sunlight-punctuation">;</span>
+&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-punctuation">}</span>
+<span class="sunlight-punctuation">}</span>
+</span></pre></div></div></code></pre>
+<p>&#x5B9F;&#x969B;&#x306B;&#x5B9F;&#x884C;&#x3057;&#x3066;&#x307F;&#x307E;&#x3057;&#x3087;&#x3046;&#x3002;&#x540C;&#x69D8;&#x306B;&#x3001;IDE&#x307E;&#x305F;&#x306F;.jar&#x30D5;&#x30A1;&#x30A4;&#x30EB;&#x304B;&#x3089;&#x5B9F;&#x884C;&#x3057;&#x307E;&#x3059;&#x3002;</p>
+<pre><code>group: groupid, consumer: Consumer3, partition: 2, topic: mytopic, offset: 26, key: null, value: message1
+group: groupid, consumer: Consumer2, partition: 1, topic: mytopic, offset: 26, key: null, value: message2
+group: groupid, consumer: Consumer1, partition: 0, topic: mytopic, offset: 28, key: null, value: message3
+group: groupid, consumer: Consumer3, partition: 2, topic: mytopic, offset: 27, key: null, value: message4
+group: groupid, consumer: Consumer2, partition: 1, topic: mytopic, offset: 27, key: null, value: message5
+group: groupid, consumer: Consumer1, partition: 0, topic: mytopic, offset: 29, key: null, value: message6
+group: groupid, consumer: Consumer3, partition: 2, topic: mytopic, offset: 28, key: null, value: message7
+group: groupid, consumer: Consumer2, partition: 1, topic: mytopic, offset: 28, key: null, value: message8
+</code></pre><p>&#x7D50;&#x679C;&#x306E;&#x4E2D;&#x306B;&#x306F;&#x3001;Consumer5&#x304C;&#x4E00;&#x5EA6;&#x3082;&#x767B;&#x5834;&#x3057;&#x3066;&#x304D;&#x3066;&#x3044;&#x307E;&#x305B;&#x3093;&#x3002;&#x3053;&#x306E;&#x3088;&#x3046;&#x306B;&#x3001;&#x30D1;&#x30FC;&#x30C6;&#x30A3;&#x30B7;&#x30E7;&#x30F3;&#x6570;&#x4EE5;&#x4E0A;&#x306E;Consumer&#x3092;&#x8FFD;&#x52A0;&#x3057;&#x3066;&#x3082;&#x3001;&#x30D1;&#x30FC;&#x30C6;&#x30A3;&#x30B7;&#x30E7;&#x30F3;&#x3088;&#x308A;&#x3082;Consumer&#x306E;&#x65B9;&#x304C;&#x591A;&#x3044;&#x5834;&#x5408;&#x306B;&#x306F;&#x3001;&#x30E1;&#x30C3;&#x30BB;&#x30FC;&#x30B8;&#x3092;&#x53D7;&#x3051;&#x53D6;&#x3063;&#x3066;&#x304F;&#x308C;&#x306A;&#x3044;Consumer&#x304C;&#x51FA;&#x3066;&#x304D;&#x3057;&#x307E;&#x3044;&#x307E;&#x3059;&#x306E;&#x3067;&#x3001;&#x907F;&#x3051;&#x307E;&#x3057;&#x3087;&#x3046;&#x3002;</p>
+<h3 id="824-consumer&#x30B0;&#x30EB;&#x30FC;&#x30D7;&#x8FFD;&#x52A0;-&#x306E;&#x30B1;&#x30FC;&#x30B9;"><span class="number-for-pdf">8.2.4. </span>Consumer&#x30B0;&#x30EB;&#x30FC;&#x30D7;&#x8FFD;&#x52A0; &#x306E;&#x30B1;&#x30FC;&#x30B9;</h3>
+<p>&#x6700;&#x5F8C;&#x306F;&#x5225;&#x306E;Consumer&#x30B0;&#x30EB;&#x30FC;&#x30D7;&#x3092;&#x8FFD;&#x52A0;&#x3057;&#x305F;&#x30B1;&#x30FC;&#x30B9;&#x3092;&#x8A66;&#x3057;&#x3066;&#x3044;&#x304D;&#x307E;&#x3059;&#x3002;AMQ Stream(Apache Kafka) &#x3067;&#x306F;&#x3001;&#x30E1;&#x30C3;&#x30BB;&#x30FC;&#x30B8;&#x3092;&#x6D88;&#x8CBB;&#x3059;&#x308B;&#x30A2;&#x30D7;&#x30EA;&#x30B1;&#x30FC;&#x30B7;&#x30E7;&#x30F3;&#x304C;&#x5897;&#x3048;&#x305F;&#x5834;&#x5408;&#x306B;&#x3082;&#x67D4;&#x8EDF;&#x306B;&#x5BFE;&#x5FDC;&#x3059;&#x308B;&#x304C;&#x3067;&#x304D;&#x307E;&#x3059;&#x3002;</p>
+<p><img src="../../images/exercise-6-consumer3.png" alt=""></p>
+<p>&#x3053;&#x3053;&#x3067;&#x306F;&#x7570;&#x306A;&#x308B;Consumer&#x30B0;&#x30EB;&#x30FC;&#x30D7;&#x3092;&#x4F5C;&#x6210;&#x3059;&#x308B;&#x3001;AnotherConsumerGroup.java&#x3092;&#x5229;&#x7528;&#x3057;&#x3066;&#x5B9F;&#x969B;&#x306B;&#x52D5;&#x304B;&#x3057;&#x3066;&#x307F;&#x307E;&#x3059;&#x3002;</p>
+<p>AnotherConsumerGroup.java</p>
+<pre><code class="lang-java"><div class="sunlight-container sunlight-theme-dark"><div class="sunlight-code-container" style="border-width: 1px; border-style: solid;"><div class="sunlight-line-number-margin"><a name="sunlight-72-line-1" href="#sunlight-72-line-1">1</a>
+<a name="sunlight-72-line-2" href="#sunlight-72-line-2">2</a>
+<a name="sunlight-72-line-3" href="#sunlight-72-line-3">3</a>
+<a name="sunlight-72-line-4" href="#sunlight-72-line-4">4</a>
+<a name="sunlight-72-line-5" href="#sunlight-72-line-5">5</a>
+<a name="sunlight-72-line-6" href="#sunlight-72-line-6">6</a>
+<a name="sunlight-72-line-7" href="#sunlight-72-line-7">7</a>
+<a name="sunlight-72-line-8" href="#sunlight-72-line-8">8</a>
+<a name="sunlight-72-line-9" href="#sunlight-72-line-9">9</a>
+<a name="sunlight-72-line-10" href="#sunlight-72-line-10">10</a>
+<a name="sunlight-72-line-11" href="#sunlight-72-line-11">11</a>
+<a name="sunlight-72-line-12" href="#sunlight-72-line-12">12</a>
+<a name="sunlight-72-line-13" href="#sunlight-72-line-13">13</a>
+<a name="sunlight-72-line-14" href="#sunlight-72-line-14">14</a>
+<a name="sunlight-72-line-15" href="#sunlight-72-line-15">15</a>
+<a name="sunlight-72-line-16" href="#sunlight-72-line-16">16</a>
+<a name="sunlight-72-line-17" href="#sunlight-72-line-17">17</a>
+<a name="sunlight-72-line-18" href="#sunlight-72-line-18">18</a>
+<a name="sunlight-72-line-19" href="#sunlight-72-line-19">19</a>
+<a name="sunlight-72-line-20" href="#sunlight-72-line-20">20</a>
+<a name="sunlight-72-line-21" href="#sunlight-72-line-21">21</a>
+<a name="sunlight-72-line-22" href="#sunlight-72-line-22">22</a>
+<a name="sunlight-72-line-23" href="#sunlight-72-line-23">23</a>
+<a name="sunlight-72-line-24" href="#sunlight-72-line-24">24</a>
+<a name="sunlight-72-line-25" href="#sunlight-72-line-25">25</a>
+</div><pre class="sunlight-highlight-java sunlight-highlighted"><span class="sunlight-java">
+<span class="sunlight-keyword">import</span>&#xA0;<span class="sunlight-ident">java</span><span class="sunlight-operator">.</span><span class="sunlight-ident">util</span><span class="sunlight-operator">.</span><span class="sunlight-ident">concurrent</span><span class="sunlight-operator">.</span><span class="sunlight-named-ident">ExecutorService</span><span class="sunlight-punctuation">;</span>
+<span class="sunlight-keyword">import</span>&#xA0;<span class="sunlight-ident">java</span><span class="sunlight-operator">.</span><span class="sunlight-ident">util</span><span class="sunlight-operator">.</span><span class="sunlight-ident">concurrent</span><span class="sunlight-operator">.</span><span class="sunlight-named-ident">Executors</span><span class="sunlight-punctuation">;</span>
+<span class="sunlight-keyword">import</span>&#xA0;<span class="sunlight-ident">java</span><span class="sunlight-operator">.</span><span class="sunlight-ident">util</span><span class="sunlight-operator">.</span><span class="sunlight-ident">stream</span><span class="sunlight-operator">.</span><span class="sunlight-named-ident">Stream</span><span class="sunlight-punctuation">;</span>
+
+<span class="sunlight-keyword">public</span>&#xA0;<span class="sunlight-keyword">class</span>&#xA0;<span class="sunlight-named-ident">AnotherConsumerGroup</span>&#xA0;<span class="sunlight-punctuation">{</span>
+
+&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-keyword">public</span>&#xA0;<span class="sunlight-keyword">static</span>&#xA0;<span class="sunlight-keyword">void</span>&#xA0;<span class="sunlight-ident">main</span><span class="sunlight-punctuation">(</span><span class="sunlight-named-ident">String</span><span class="sunlight-punctuation">[</span><span class="sunlight-punctuation">]</span>&#xA0;<span class="sunlight-ident">args</span><span class="sunlight-punctuation">)</span>&#xA0;<span class="sunlight-punctuation">{</span>
+
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-named-ident">String</span>&#xA0;<span class="sunlight-ident">consumerGroupName</span>&#xA0;<span class="sunlight-operator">=</span>&#xA0;<span class="sunlight-string">&quot;anothergroupid&quot;</span><span class="sunlight-punctuation">;</span>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-named-ident">String</span>&#xA0;<span class="sunlight-ident">topic</span>&#xA0;<span class="sunlight-operator">=</span>&#xA0;<span class="sunlight-string">&quot;mytopic&quot;</span><span class="sunlight-punctuation">;</span>
+
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-comment">//&#xA0;Consumer&#x306E;&#x6570;&#x3092;5&#x3064;&#x306B;&#x5897;&#x3084;&#x3057;&#x307E;&#x3057;&#x305F;</span>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-named-ident">String</span><span class="sunlight-punctuation">[</span><span class="sunlight-punctuation">]</span>&#xA0;<span class="sunlight-ident">consumerList</span>&#xA0;<span class="sunlight-operator">=</span>&#xA0;<span class="sunlight-punctuation">{</span><span class="sunlight-string">&quot;AnotherConsumer1&quot;</span><span class="sunlight-punctuation">,</span>&#xA0;<span class="sunlight-string">&quot;AnotherConsumer2&quot;</span><span class="sunlight-punctuation">}</span><span class="sunlight-punctuation">;</span>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-keyword">int</span>&#xA0;<span class="sunlight-ident">numConsumers</span>&#xA0;<span class="sunlight-operator">=</span>&#xA0;<span class="sunlight-ident">consumerList</span><span class="sunlight-operator">.</span><span class="sunlight-ident">length</span><span class="sunlight-punctuation">;</span>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-named-ident">ExecutorService</span>&#xA0;<span class="sunlight-ident">executor</span>&#xA0;<span class="sunlight-operator">=</span>&#xA0;<span class="sunlight-ident">Executors</span><span class="sunlight-operator">.</span><span class="sunlight-ident">newFixedThreadPool</span><span class="sunlight-punctuation">(</span><span class="sunlight-ident">numConsumers</span><span class="sunlight-punctuation">)</span><span class="sunlight-punctuation">;</span>
+
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-comment">//&#xA0;&#x540C;&#x671F;&#x9001;&#x4FE1;</span>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-ident">Stream</span><span class="sunlight-operator">.</span><span class="sunlight-ident">of</span><span class="sunlight-punctuation">(</span><span class="sunlight-ident">consumerList</span><span class="sunlight-punctuation">)</span>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-operator">.</span><span class="sunlight-ident">forEach</span><span class="sunlight-punctuation">(</span><span class="sunlight-ident">consumer</span>&#xA0;<span class="sunlight-operator">-</span><span class="sunlight-operator">&gt;</span>&#xA0;<span class="sunlight-punctuation">{</span>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-named-ident">ConsumerThread</span>&#xA0;<span class="sunlight-ident">consumerThread</span>&#xA0;<span class="sunlight-operator">=</span>&#xA0;<span class="sunlight-keyword">new</span>&#xA0;<span class="sunlight-named-ident">ConsumerThread</span><span class="sunlight-punctuation">(</span><span class="sunlight-ident">consumer</span><span class="sunlight-punctuation">,</span><span class="sunlight-ident">consumerGroupName</span><span class="sunlight-punctuation">,</span><span class="sunlight-ident">topic</span><span class="sunlight-punctuation">)</span><span class="sunlight-punctuation">;</span>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-ident">executor</span><span class="sunlight-operator">.</span><span class="sunlight-ident">submit</span><span class="sunlight-punctuation">(</span><span class="sunlight-ident">consumerThread</span><span class="sunlight-punctuation">)</span><span class="sunlight-punctuation">;</span>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-punctuation">}</span><span class="sunlight-punctuation">)</span><span class="sunlight-punctuation">;</span>
+&#xA0;&#xA0;&#xA0;&#xA0;<span class="sunlight-punctuation">}</span>
+<span class="sunlight-punctuation">}</span>
+</span></pre></div></div></code></pre>
+<p>&#x3053;&#x3061;&#x3089;&#x3082;&#x5B9F;&#x969B;&#x306B;&#x5B9F;&#x884C;&#x3057;&#x3066;&#x307F;&#x307E;&#x3057;&#x3087;&#x3046;&#x3002;&#x540C;&#x69D8;&#x306B;&#x3001;IDE&#x307E;&#x305F;&#x306F;.jar&#x30D5;&#x30A1;&#x30A4;&#x30EB;&#x304B;&#x3089;&#x5B9F;&#x884C;&#x3057;&#x307E;&#x3059;&#x3002;</p>
+<p>ConsumerGroup.java&#x306E;&#x7D50;&#x679C;</p>
+<pre><code>group: groupid, consumer: Consumer3, partition: 2, topic: mytopic, offset: 26, key: null, value: message1
+group: groupid, consumer: Consumer2, partition: 1, topic: mytopic, offset: 26, key: null, value: message2
+group: groupid, consumer: Consumer1, partition: 0, topic: mytopic, offset: 28, key: null, value: message3
+group: groupid, consumer: Consumer3, partition: 2, topic: mytopic, offset: 27, key: null, value: message4
+group: groupid, consumer: Consumer2, partition: 1, topic: mytopic, offset: 27, key: null, value: message5
+group: groupid, consumer: Consumer1, partition: 0, topic: mytopic, offset: 29, key: null, value: message6
+group: groupid, consumer: Consumer3, partition: 2, topic: mytopic, offset: 28, key: null, value: message7
+group: groupid, consumer: Consumer2, partition: 1, topic: mytopic, offset: 28, key: null, value: message8
+</code></pre><p>AnotherConsumerGroup.java&#x306E;&#x7D50;&#x679C;</p>
+<pre><code>group: groupid, consumer: Consumer3, partition: 2, topic: mytopic, offset: 26, key: null, value: message1
+group: groupid, consumer: Consumer2, partition: 1, topic: mytopic, offset: 26, key: null, value: message2
+group: groupid, consumer: Consumer1, partition: 0, topic: mytopic, offset: 28, key: null, value: message3
+group: groupid, consumer: Consumer3, partition: 2, topic: mytopic, offset: 27, key: null, value: message4
+group: groupid, consumer: Consumer2, partition: 1, topic: mytopic, offset: 27, key: null, value: message5
+group: groupid, consumer: Consumer1, partition: 0, topic: mytopic, offset: 29, key: null, value: message6
+group: groupid, consumer: Consumer3, partition: 2, topic: mytopic, offset: 28, key: null, value: message7
+group: groupid, consumer: Consumer2, partition: 1, topic: mytopic, offset: 28, key: null, value: message8
+</code></pre><p>Consumer Group</p>
+<p>&#x4EE5;&#x4E0A;&#x3067; Producer &#x3068; Consumer &#x306E;&#x958B;&#x767A; (&#x57FA;&#x790E;&#x7DE8;)&#x3000;&#x306F;&#x7D42;&#x4E86;&#x3067;&#x3059;&#x3002;</p>
+</body></html>
                                 
                                 </section>
                             
@@ -818,7 +1213,7 @@ body {
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"演習6","level":"1.7","depth":1,"next":{"title":"Hands-On 環境の構築","level":"1.8","depth":1,"path":"hands-on/infrastructure.md","ref":"hands-on/infrastructure.md","articles":[]},"previous":{"title":"順序の確認","level":"1.6.5","depth":2,"anchor":"#order","path":"hands-on/exam5.md","ref":"hands-on/exam5.md#order","articles":[]},"dir":"ltr"},"config":{"plugins":["flexible-alerts","expand-active-chapter","-highlight","sunlight-highlighter","chapter-numbering"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"expand-active-chapter":{},"chapter-numbering":{},"flexible-alerts":{"danger":{"className":"danger","icon":"fa fa-ban","label":"Attention"},"note":{"className":"info","icon":"fa fa-info-circle","label":"Note"},"style":"callout","tip":{"className":"tip","icon":"fa fa-lightbulb-o","label":"Tip"},"warning":{"className":"warning","icon":"fa fa-exclamation-triangle","label":"Warning"}},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"sunlight-highlighter":{"lineNumbers":true,"theme":"dark"}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"AMQ Streams on RHEL Hands-On","language":"ja","gitbook":"*","description":"This is a AMQ Streams(Apache Kafka) Hands-On documents.","comment":[]},"file":{"path":"hands-on/exam6.md","mtime":"2020-03-09T06:31:59.342Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-10-11T07:10:49.405Z"},"basePath":"..","book":{"language":"ja"}});
+            gitbook.page.hasChanged({"page":{"title":"演習6. Producer と Consumer の開発","level":"1.7","depth":1,"next":{"title":"Hands-On 環境の構築","level":"1.8","depth":1,"path":"hands-on/infrastructure.md","ref":"hands-on/infrastructure.md","articles":[]},"previous":{"title":"順序の確認","level":"1.6.5","depth":2,"anchor":"#order","path":"hands-on/exam5.md","ref":"hands-on/exam5.md#order","articles":[]},"dir":"ltr"},"config":{"plugins":["flexible-alerts","expand-active-chapter","-highlight","sunlight-highlighter","chapter-numbering"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"livereload":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"expand-active-chapter":{},"chapter-numbering":{},"flexible-alerts":{"danger":{"className":"danger","icon":"fa fa-ban","label":"Attention"},"note":{"className":"info","icon":"fa fa-info-circle","label":"Note"},"style":"callout","tip":{"className":"tip","icon":"fa fa-lightbulb-o","label":"Tip"},"warning":{"className":"warning","icon":"fa fa-exclamation-triangle","label":"Warning"}},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"sunlight-highlighter":{"lineNumbers":true,"theme":"dark"}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"AMQ Streams on RHEL Hands-On","language":"ja","gitbook":"*","description":"This is a AMQ Streams(Apache Kafka) Hands-On documents.","comment":[]},"file":{"path":"hands-on/exam6.md","mtime":"2021-08-15T00:48:12.216Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2021-08-15T00:50:55.690Z"},"basePath":"..","book":{"language":"ja"}});
         });
     </script>
 </div>
@@ -833,6 +1228,10 @@ body {
     
         
         <script src="../../gitbook/gitbook-plugin-expand-active-chapter/expand-active-chapter.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-livereload/plugin.js"></script>
         
     
         

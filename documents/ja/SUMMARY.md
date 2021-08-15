@@ -40,6 +40,6 @@
     * [Topic の再作成](hands-on/exam5.md#topic)
     * [順序の確認](hands-on/exam5.md#order)
 
-* [演習6](hands-on/exam6.md)
+* [演習6. Producer と Consumer の開発](hands-on/exam6.md)
 
 * [Hands-On 環境の構築](hands-on/infrastructure.md)
