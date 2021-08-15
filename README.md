@@ -1,6 +1,5 @@
 # GitBook
 こちらの[GitBook](https://k-kosugi.github.io/kafka-hands-on/ja/)で公開しています。
-※[テスト用GitBook](https://suzukiry.github.io/kafka-hands-on/ja/)
 
 # Introduction
 - イントロダクション
