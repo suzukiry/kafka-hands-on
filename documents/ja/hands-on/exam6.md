@@ -2,13 +2,14 @@
 
 
 Producer と Consumer のクライアントを開発していきます。
-今回の演習で使うための新しいトピックを、最初に作成しておきます。Partitionを4つとした新しいtesttopicを作成し、このトピックに対して開発する Producer と Consumer を使って、メッセージの送受信を行います。
+
+今回の演習で使うためのトピックを、最初に準備しておきます。Partitionを4つに変更した`mytopic`を用意し、このトピックに対して開発する Producer と Consumer を使って、メッセージの送受信を行います。
 
 ```bash
 $ /opt/kafka/bin/kafka-topics.sh --alter --topic mytopic --partitions 4 --bootstrap-server 192.168.33.11:2181
 ```
 
-## Producer の開発 {#login}
+## Producer の開発 {#producer}
 
 以下のコマンドを実行して Kafka Producer のソースコードを clone します。
 
@@ -16,10 +17,11 @@ $ /opt/kafka/bin/kafka-topics.sh --alter --topic mytopic --partitions 4 --bootst
 $ git clone https://github.com/k-kosugi/kafka-hands-on
 ```
 
-### Producer のコード確認 {#code}
+### Producer のコード確認 
 
-ダウンロードしたレポジトリの、/producer/src/main/java/com/redhat/japan/kafka/producer ディレクトリにProducerのコードが保存されています。今回は、IDEから実行していきますので、お使いのIDEからダウンロードしたProducerのファイルを閲覧してみてください。
+ダウンロードしたレポジトリの、[/producer/src/main/java/com/redhat/japan/kafka/producer](https://github.com/k-kosugi/kafka-hands-on/tree/master/producer/src/main/java/com/redhat/japan/kafka/producer) ディレクトリにProducerのコードが保存されています。今回は、IDEから実行していきますので、お使いのIDEからダウンロードしたProducerのファイルを閲覧してみてください。
 
+*Producer.java*
 ```java
 package com.redhat.japan.kafka.client;
 
@@ -88,70 +90,93 @@ IDE、または.jarファイルを作成してコマンドラインから実行�
 
 ```
 =====================================================
-2021-08-13T15:23:55.370
+2021-08-15T10:00:44.633
       value : message1
-  partition : 1
-     offset : 0
-=====================================================
-2021-08-13T15:23:57.396
-      value : message2
   partition : 0
      offset : 0
 =====================================================
-2021-08-13T15:23:59.423
+2021-08-15T10:00:46.649
+      value : message2
+  partition : 3
+     offset : 0
+=====================================================
+2021-08-15T10:00:48.900
       value : message3
   partition : 2
      offset : 0
 =====================================================
-2021-08-13T15:24:01.433
+2021-08-15T10:00:50.992
       value : message4
   partition : 1
-     offset : 1
+     offset : 0
 =====================================================
-2021-08-13T15:24:03.445
-      value : messasge5
+2021-08-15T10:00:53
+      value : message5
   partition : 0
      offset : 1
 =====================================================
-2021-08-13T15:24:05.459
+2021-08-15T10:00:55.009
       value : message6
+  partition : 3
+     offset : 1
+=====================================================
+2021-08-15T10:00:57.021
+      value : message7
   partition : 2
      offset : 1
 =====================================================
-2021-08-13T15:24:07.472
-      value : messasge7
-  partition : 1
-     offset : 2
-=====================================================
-2021-08-13T15:24:09.485
+2021-08-15T10:00:59.031
       value : message8
-  partition : 0
-     offset : 2
-
-Process finished with exit code 0
+  partition : 1
+     offset : 1
 ```
-このログからpartition がローテーションされていることがわかります。これはパーティションの割り当てと呼ばれ、KafkaではまずProducerがBrokerにどのようにパーティションを割り当てるかを決定します。 割り当てられた後は、offsetの番号は通常通りインクリメントされていきます。
 
-Producerクライアントによるパーティションの割り当て方法は、デフォルトではラウンドロビンでのメッセージ送信となります。その他、Producer クライアントから、以下のような方法でメッセージを送信することができます。
+このログから `partition :` がローテーションされていることがわかります。これはProducerによるパーティションの割り当てが行われていてます。KafkaではまずProducerがBrokerにどのようにパーティションを割り当てるかを決定します。 割り当てられた後は、offsetの番号は通常通りインクリメントされていきます。
 
-## Consumer の開発
+| No. | メッセージ | パーティション |
+|:--|:--|:--|
+| 1 |message1|partition: 0|
+| 2 |message2|partition: 3|
+| 3 |message3|partition: 2|
+| 4 |message4|partition: 1|
+| 5 |message5|partition: 0|
+| 6 |message6|partition: 3|
+| 7 |message7|partition: 2|
+| 8 |message8|partition: 1|
 
-それではtesttopicへ８つのmessageを送付しましたので、Consumerクライアントを使ってメッセージの受信をしていきます。
+Producerクライアントによるパーティションの割り当て方法は、キーの値がない場合は、ラウンドロビンでのメッセージ送信となります。その他、Producer クライアントから、以下のような方法でメッセージを送信することができます。
+
+> [!NOTE]
+> キーの値がある場合は、デフォルトではキーのハッシュを生成して、それを特定のパーティションに割り当てます。
+
+
+## Consumer の開発 {#consumer}
+
+それでは`mytopic`へ８つのmessageを送付しましたので、Consumerクライアントを使ってメッセージの受信をしていきます。
 
 ### Consumer のコード確認
-本演習の初回でダウンロードしたレポジトリの、/consumer/src/main/java/com/redhat/japan/kafka/consumer ディレクトリにConsumerのコードを保存しています。
+本演習の初回でダウンロードしたレポジトリの、[/consumer/src/main/java/com/redhat/japan/kafka/consumer](https://github.com/k-kosugi/kafka-hands-on/tree/master/consumer/src/main/java/com/redhat/japan/kafka/consumer) ディレクトリにConsumerのコードを保存しています。
 
-Kafka　Consumerは、ConsumerとConsumerグループで構成されています。ConsumerはConsumerグループに属していて、各Consumerは購読するトピックのパーティションを担当しています。
+Kafka Consumerは、ConsumerとConsumerグループで構成されています。ConsumerはConsumerグループに属していて、各Consumerは購読するトピックのパーティションを担当しています。
 
-また万が一Consumerが障害でシャットダウンなどに止まった場合にも、グループ内のConsumer同士で担当するパーティションのオーナーシップを引き継ぐことができるため、可用性を持つことができます。この仕組みがリバランスと言われています。
+万が一Consumerが障害でシャットダウンなどに止まった場合にも、グループ内のConsumer同士で担当するパーティションのオーナーシップを引き継ぐことができるため、可用性を持つことができます。この仕組みがリバランスと言われています。
 
 ![](../../images/exercise-6-consumer1.png)
 
-図１や図２のようにConsumerを増やすことで購読するトピックのパーティションを共有できます。トピックのメッセージの消費をスケールするには、パーティションと同数のConsumerを持つことです。図３は４つのConsumerにそれぞれ一つのパーティションが割り当てられている例です。
-そこで、ここでは図３のようなConsumer、Consumerグループを開発していきます。Consumerをマルチスレッドで作るため、複数スレッドとしてKafka Consumerを呼び出すConsumerGroup.javaと、実際にConsumerタスクを生成するConsumerThread.javaの二つを利用します。
+図１や図２のようにConsumerを増やすことで購読するトピックのパーティションを共有することができます。トピックのメッセージの消費をスケールするためには、パーティションと同数のConsumerを持つことになります。図３は４つのConsumerにそれぞれ一つのパーティションが割り当てられている例です。
 
-ConsumerGroup.java
+ここでは図３のようにそれぞれのパーティションに割り当てがされている、Consumer、Consumerグループを開発していきます。Consumerをマルチスレッドで作るため、複数スレッドとしてKafka Consumerを呼び出す[ConsumerGroup.java]()と、実際にConsumerタスクを生成する[ConsumerThread.java]()の二つを利用します。
+
+*ConsumerGroup.java*
 ```java
+package com.redhat.japan.kafka.consumer;
+
+import org.apache.kafka.clients.consumer.ConsumerConfig;
+import org.apache.kafka.clients.consumer.KafkaConsumer;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -163,7 +188,7 @@ public class ConsumerGroup {
 
         String consumerGroupName = "groupid";
         String topic = "mytopic";
-        String[] consumerList = {"Consumer1", "Consumer2", "Consumer3"};
+        String[] consumerList = {"Consumer1", "Consumer2", "Consumer3", "Consumer4"};
         int numConsumers = consumerList.length;
         ExecutorService executor = Executors.newFixedThreadPool(numConsumers);
 
@@ -175,10 +200,11 @@ public class ConsumerGroup {
                 });
     }
 }
+
 ```
 
 
-ConsumerThread.java
+*ConsumerThread.java*
 ```java
 package com.redhat.japan.kafka.consumer;
 
@@ -208,7 +234,7 @@ public class ConsumerThread implements Runnable {
 
         // プロパティの生成と設定
         Properties properties = new Properties();
-        properties.setProperty(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
+        properties.setProperty(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "192.168.33.11:9092");
         properties.setProperty(ConsumerConfig.GROUP_ID_CONFIG, consumerGroupName);
         properties.setProperty(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringDeserializer");
         properties.setProperty(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringDeserializer");
@@ -251,34 +277,43 @@ public class ConsumerThread implements Runnable {
 ### Consumer のコード実行 
 IDEまたは.jarファイルから実行します。
 
+*ConsumerGroup.javaの結果*
 ```
-group: groupid, consumer: Consumer3, partition: 2, topic: mytopic, offset: 26, key: null, value: message1
-group: groupid, consumer: Consumer2, partition: 1, topic: mytopic, offset: 26, key: null, value: message2
-group: groupid, consumer: Consumer1, partition: 0, topic: mytopic, offset: 28, key: null, value: message3
-group: groupid, consumer: Consumer3, partition: 2, topic: mytopic, offset: 27, key: null, value: message4
-group: groupid, consumer: Consumer2, partition: 1, topic: mytopic, offset: 27, key: null, value: message5
-group: groupid, consumer: Consumer1, partition: 0, topic: mytopic, offset: 29, key: null, value: message6
-group: groupid, consumer: Consumer3, partition: 2, topic: mytopic, offset: 28, key: null, value: message7
-group: groupid, consumer: Consumer2, partition: 1, topic: mytopic, offset: 28, key: null, value: message8
+group: groupid, consumer: Consumer1, partition: 0, topic: mytopic, offset: 2, key: null, value: message1
+group: groupid, consumer: Consumer4, partition: 3, topic: mytopic, offset: 2, key: null, value: message2
+group: groupid, consumer: Consumer3, partition: 2, topic: mytopic, offset: 2, key: null, value: message3
+group: groupid, consumer: Consumer2, partition: 1, topic: mytopic, offset: 2, key: null, value: message4
+group: groupid, consumer: Consumer1, partition: 0, topic: mytopic, offset: 3, key: null, value: message5
+group: groupid, consumer: Consumer4, partition: 3, topic: mytopic, offset: 3, key: null, value: message6
+group: groupid, consumer: Consumer3, partition: 2, topic: mytopic, offset: 3, key: null, value: message7
+group: groupid, consumer: Consumer2, partition: 1, topic: mytopic, offset: 3, key: null, value: message8
+
 ```
 
-Consumer1にはpartition: 0、Consumer2にはpartition: 1、Consumer3にはpartition: 2が割り当てられており、トピックの３つのパーティションにそれぞれConsumerが割り当てられているのがわかります。
+Consumer1にはパーティションが以下のように割り当てられており、トピックの持つ４つのパーティションにそれぞれConsumerが割り当てられていることがわかります。
 
-### パーティション以上のConsumer のケース
+| No. | Consumer | パーティション |
+|:--:|:--:|:--:|
+| 1 |Consumer1|partition: 0|
+| 2 |Consumer2|partition: 3|
+| 3 |Consumer3|partition: 2|
+| 4 |Consumer4|partition: 1|
+
+## パーティション以上のConsumer のケース {#multiconsumers}
 それでは、パーティション以上のConsumerが生成された場合も見ておきましょう。
 
-![](../../images/exercise-6-consumer2.png)
+<div style="text-align: center"><img src="../../images/exercise-6-consumer2.png" width="200"></div>
 
 Kafka Consumerでは、トピックのパーティション数以上にConsumerを追加してもパーティションはアサインされません。余ったConsumerはアイドル状態になるため、ちゃんとパーティション数を確認の上、Consumer数は設計することが必要です。
 
-ConsumerGroupWithFiveConsumers.java
+*ConsumerGroupWithFiveCons.java*
 ```java
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.stream.Stream;
 
-public class ConsumerGroupWithFiveConsumers {
+public class ConsumerGroupWithFiveCons {
 
     public static void main(String[] args) {
 
@@ -302,28 +337,40 @@ public class ConsumerGroupWithFiveConsumers {
 
 実際に実行してみましょう。同様に、IDEまたは.jarファイルから実行します。
 
+*ConsumerGroupWithFiveCons.javaの結果*
 ```
-group: groupid, consumer: Consumer3, partition: 2, topic: mytopic, offset: 26, key: null, value: message1
-group: groupid, consumer: Consumer2, partition: 1, topic: mytopic, offset: 26, key: null, value: message2
-group: groupid, consumer: Consumer1, partition: 0, topic: mytopic, offset: 28, key: null, value: message3
-group: groupid, consumer: Consumer3, partition: 2, topic: mytopic, offset: 27, key: null, value: message4
-group: groupid, consumer: Consumer2, partition: 1, topic: mytopic, offset: 27, key: null, value: message5
-group: groupid, consumer: Consumer1, partition: 0, topic: mytopic, offset: 29, key: null, value: message6
-group: groupid, consumer: Consumer3, partition: 2, topic: mytopic, offset: 28, key: null, value: message7
-group: groupid, consumer: Consumer2, partition: 1, topic: mytopic, offset: 28, key: null, value: message8
+group: groupid, consumer: Consumer4, partition: 3, topic: mytopic, offset: 8, key: null, value: message1
+group: groupid, consumer: Consumer3, partition: 2, topic: mytopic, offset: 8, key: null, value: message2
+group: groupid, consumer: Consumer2, partition: 1, topic: mytopic, offset: 8, key: null, value: message3
+group: groupid, consumer: Consumer1, partition: 0, topic: mytopic, offset: 8, key: null, value: message4
+group: groupid, consumer: Consumer4, partition: 3, topic: mytopic, offset: 9, key: null, value: messasge5
+group: groupid, consumer: Consumer3, partition: 2, topic: mytopic, offset: 9, key: null, value: message6
+group: groupid, consumer: Consumer2, partition: 1, topic: mytopic, offset: 9, key: null, value: messasge7
+group: groupid, consumer: Consumer1, partition: 0, topic: mytopic, offset: 9, key: null, value: message8
 ```
 
-結果の中には、Consumer5が一度も登場してきていません。このように、パーティション数以上のConsumerを追加しても、パーティションよりもConsumerの方が多い場合には、メッセージを受け取ってくれないConsumerが出てきしまいますので、避けましょう。
+結果の中には、Consumer5が一度も登場してきていません。
 
-### Consumerグループ追加 のケース
+| No. | Consumer | パーティション |
+|:--:|:--:|:--:|
+| 1 |Consumer1|partition: 0|
+| 2 |Consumer2|partition: 1|
+| 3 |Consumer3|partition: 2|
+| 4 |Consumer4|partition: 3|
+| 5 |Consumer5|割り当てなし|
+
+このように、パーティション数以上のConsumerを追加しても、パーティションよりもConsumerの方が多い場合には、メッセージを受け取ってくれないConsumerが出てきしまいますので、避けましょう。
+
+## Consumerグループ追加 のケース {#consumergroups}
 最後は別のConsumerグループを追加したケースを試していきます。AMQ Stream(Apache Kafka) では、メッセージを消費するアプリケーションが増えた場合にも柔軟に対応するができます。
 
-![](../../images/exercise-6-consumer3.png)
+<div style="text-align: center"><img src="../../images/exercise-6-consumer3.png" width="200"></div>
+
 
 ここでは異なるConsumerグループを作成する、AnotherConsumerGroup.javaを利用して実際に動かしてみます。
 
 
-AnotherConsumerGroup.java
+*AnotherConsumerGroup.java*
 ```java
 
 import java.util.concurrent.ExecutorService;
@@ -355,33 +402,41 @@ public class AnotherConsumerGroup {
 こちらも実際に実行してみましょう。同様に、IDEまたは.jarファイルから実行します。
 
 
-ConsumerGroup.javaの結果
+*ConsumerGroup.javaの結果*
 ```
-group: groupid, consumer: Consumer3, partition: 2, topic: mytopic, offset: 26, key: null, value: message1
-group: groupid, consumer: Consumer2, partition: 1, topic: mytopic, offset: 26, key: null, value: message2
-group: groupid, consumer: Consumer1, partition: 0, topic: mytopic, offset: 28, key: null, value: message3
-group: groupid, consumer: Consumer3, partition: 2, topic: mytopic, offset: 27, key: null, value: message4
-group: groupid, consumer: Consumer2, partition: 1, topic: mytopic, offset: 27, key: null, value: message5
-group: groupid, consumer: Consumer1, partition: 0, topic: mytopic, offset: 29, key: null, value: message6
-group: groupid, consumer: Consumer3, partition: 2, topic: mytopic, offset: 28, key: null, value: message7
-group: groupid, consumer: Consumer2, partition: 1, topic: mytopic, offset: 28, key: null, value: message8
+group: groupid, consumer: Consumer3, partition: 2, topic: mytopic, offset: 10, key: null, value: message1
+group: groupid, consumer: Consumer2, partition: 1, topic: mytopic, offset: 10, key: null, value: message2
+group: groupid, consumer: Consumer1, partition: 0, topic: mytopic, offset: 10, key: null, value: message3
+group: groupid, consumer: Consumer4, partition: 3, topic: mytopic, offset: 10, key: null, value: message4
+group: groupid, consumer: Consumer3, partition: 2, topic: mytopic, offset: 11, key: null, value: messasge5
+group: groupid, consumer: Consumer2, partition: 1, topic: mytopic, offset: 11, key: null, value: message6
+group: groupid, consumer: Consumer1, partition: 0, topic: mytopic, offset: 11, key: null, value: messasge7
+group: groupid, consumer: Consumer4, partition: 3, topic: mytopic, offset: 11, key: null, value: message8
 ```
 
 AnotherConsumerGroup.javaの結果
 ```
-group: groupid, consumer: Consumer3, partition: 2, topic: mytopic, offset: 26, key: null, value: message1
-group: groupid, consumer: Consumer2, partition: 1, topic: mytopic, offset: 26, key: null, value: message2
-group: groupid, consumer: Consumer1, partition: 0, topic: mytopic, offset: 28, key: null, value: message3
-group: groupid, consumer: Consumer3, partition: 2, topic: mytopic, offset: 27, key: null, value: message4
-group: groupid, consumer: Consumer2, partition: 1, topic: mytopic, offset: 27, key: null, value: message5
-group: groupid, consumer: Consumer1, partition: 0, topic: mytopic, offset: 29, key: null, value: message6
-group: groupid, consumer: Consumer3, partition: 2, topic: mytopic, offset: 28, key: null, value: message7
-group: groupid, consumer: Consumer2, partition: 1, topic: mytopic, offset: 28, key: null, value: message8
+group: anothergroupid, consumer: Consumer2, partition: 2, topic: mytopic, offset: 10, key: null, value: message1
+group: anothergroupid, consumer: Consumer1, partition: 1, topic: mytopic, offset: 10, key: null, value: message2
+group: anothergroupid, consumer: Consumer1, partition: 0, topic: mytopic, offset: 10, key: null, value: message3
+group: anothergroupid, consumer: Consumer2, partition: 3, topic: mytopic, offset: 10, key: null, value: message4
+group: anothergroupid, consumer: Consumer2, partition: 2, topic: mytopic, offset: 11, key: null, value: messasge5
+group: anothergroupid, consumer: Consumer1, partition: 1, topic: mytopic, offset: 11, key: null, value: message6
+group: anothergroupid, consumer: Consumer1, partition: 0, topic: mytopic, offset: 11, key: null, value: messasge7
+group: anothergroupid, consumer: Consumer2, partition: 3, topic: mytopic, offset: 11, key: null, value: message8
 ```
 
-Consumer Group
+二つのConsumerグループを異なるグループIDで実行することで、同じトピックのパーティションからメッセージを読み出していることがわかります。
+
+| No. | パーティション | ConsumerグループID:<br>groupid | ConsumerグループID:<br>anothergroupid |
+|:--:|:--:|:--:|:--:|
+| 1 |partition: 0|Consumer1|Consumer1|
+| 2 |partition: 1|Consumer2|Consumer1|
+| 3 |partition: 2|Consumer3|Consumer2|
+| 4 |partition: 3|Consumer4|Consumer2|
 
 
 
-以上で Producer と Consumer の開発 (基礎編)　は終了です。
+
+以上で Producer と Consumer の開発 は終了です。
 

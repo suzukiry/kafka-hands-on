@@ -18,7 +18,7 @@ public class Producer {
         Properties properties = new Properties();
 
         // Kafka Broker の設定
-        properties.setProperty(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "192.168.33.11:9092");
+        properties.setProperty(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "192.168.33.11:9092");//
 
         // StringSerializer の設定
         properties.setProperty(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringSerializer");

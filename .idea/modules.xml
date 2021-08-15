@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/producer/.mvn/.mvn.iml" filepath="$PROJECT_DIR$/producer/.mvn/.mvn.iml" />
+      <module fileurl="file://$PROJECT_DIR$/consumer/.mvn/.mvn1.iml" filepath="$PROJECT_DIR$/consumer/.mvn/.mvn1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/consumer/src/consumer.iml" filepath="$PROJECT_DIR$/consumer/src/consumer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/producer/src/producer.iml" filepath="$PROJECT_DIR$/producer/src/producer.iml" />
+    </modules>
+  </component>
+</project>
